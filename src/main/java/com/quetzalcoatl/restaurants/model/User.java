@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
+@Table(name = "users")
 public class User extends AbstractBaseEntity {
     @Column(name = "email", nullable = false, unique = true)
     @Email
@@ -33,7 +34,7 @@ public class User extends AbstractBaseEntity {
     private Date registered = new Date();
 
     //TODO: what about caching?
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")

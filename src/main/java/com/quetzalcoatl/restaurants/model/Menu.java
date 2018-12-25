@@ -4,10 +4,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Table(name = "menu")
 public class Menu extends AbstractBaseEntity{
 
     public Menu() {
@@ -22,12 +23,13 @@ public class Menu extends AbstractBaseEntity{
 
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "dishes")
-    private List<Dishes> dishes;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Dish> dishes;
+
 
     private Integer price;
 
-    private Date date;
+    private LocalDate date;
 
 
 }

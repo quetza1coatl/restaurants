@@ -2,14 +2,15 @@ package com.quetzalcoatl.restaurants.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.util.Date;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+
 
 @Entity
+@Table(name = "votes")
 public class Votes extends AbstractBaseEntity{
 
     public Votes() {
@@ -27,7 +28,10 @@ public class Votes extends AbstractBaseEntity{
     private User user;
 
 
-    private Date votingDate;
+    @Column(name = "date_time", nullable = false)
+    @NotNull
+    @DateTimeFormat
+    private LocalDateTime dateTime;
 
     public Restaurant getRestaurant() {
         return restaurant;
@@ -45,11 +49,11 @@ public class Votes extends AbstractBaseEntity{
         this.user = user;
     }
 
-    public Date getVotingDate() {
-        return votingDate;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setVotingDate(Date votingDate) {
-        this.votingDate = votingDate;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }

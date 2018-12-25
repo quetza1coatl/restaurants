@@ -27,6 +27,12 @@
           p:username="${database.username}"
           p:password="${database.password}"/>
 
+    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+        <jdbc:script location="classpath:db/initDB.sql"/>
+        <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+    </jdbc:initialize-database>
+
+
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
           p:packagesToScan="com.quetzalcoatl.**.model">
