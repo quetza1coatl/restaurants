@@ -15,15 +15,13 @@ public class Votes extends AbstractBaseEntity{
 
     public Votes() {
     }
-//TODO annotation.
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+
+    @OneToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @OneToOne
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private User user;
 

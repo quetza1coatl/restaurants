@@ -1,9 +1,10 @@
 DELETE FROM user_roles;
-DELETE FROM users;
-DELETE FROM restaurants;
 DELETE FROM menu;
-DELETE FROM dishes;
 DELETE FROM votes;
+DELETE FROM restaurants;
+DELETE FROM dishes;
+DELETE FROM users;
+
 ALTER SEQUENCE global_seq RESTART WITH 10;
 
 

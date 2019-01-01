@@ -12,7 +12,7 @@ public class Dish extends AbstractBaseEntity{
     public Dish() {
     }
 
-     @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false)
     @NotBlank
     @Size(min = 2, max = 100)
     private String name;
