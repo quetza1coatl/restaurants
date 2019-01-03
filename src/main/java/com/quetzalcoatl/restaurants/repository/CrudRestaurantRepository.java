@@ -1,15 +1,15 @@
 package com.quetzalcoatl.restaurants.repository;
 
 import com.quetzalcoatl.restaurants.model.Restaurant;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+
 
 @Transactional(readOnly = true)
 public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Integer> {
@@ -25,12 +25,7 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     @Override
     List<Restaurant> findAll();
 
-    @Override
-    Optional<Restaurant> findById(Integer id);
-
-    //    https://stackoverflow.com/a/46013654/548473
-    @EntityGraph(attributePaths = {"menu"}, type = EntityGraph.EntityGraphType.LOAD)
-    @Query("SELECT r FROM Restaurant r WHERE r.id=?1")
-    Restaurant getWithMenu(@Param("id") Integer id);
+    @Query("SELECT DISTINCT r FROM Restaurant r LEFT JOIN FETCH r.menu m WHERE m.date=?1")
+    List<Restaurant> getAllWithMenuOnDate(@Param("date") LocalDate date);
 
 }

@@ -47,18 +47,9 @@ public class RestaurantService {
         return repository.findAll();
     }
 
-    public Restaurant getByIdWithMenu(int id) {
-        return repository.getWithMenu(id);
+
+    public List<Restaurant> getAllWithMenuOnDate(LocalDate date){
+        return repository.getAllWithMenuOnDate(date);
     }
-
-    public Restaurant getByIdWithMenuOnDate(Integer id, LocalDate dateTime) {
-        Restaurant restaurant = repository.getWithMenu(id);
-        List<Menu> filtered = restaurant.getMenu().stream()
-                .filter(m -> m.getDate().isEqual(dateTime)).collect(Collectors.toList());
-        restaurant.setMenu(filtered);
-        return restaurant;
-
-    }
-
 
 }

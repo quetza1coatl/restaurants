@@ -1,6 +1,5 @@
 package com.quetzalcoatl.restaurants.repository;
 
-import com.quetzalcoatl.restaurants.model.Menu;
 import com.quetzalcoatl.restaurants.model.Restaurant;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,16 +54,5 @@ class CrudRestaurantRepositoryTest {
         assertThat(restaurant).isEqualToIgnoringGivenFields(RESTAURANT_1, "registered", "menu");
     }
 
-    @Test
-    void getWithMenu() {
-        Restaurant restaurant = repository.getWithMenu(RESTAURANT_1_ID);
-        List<Menu> menu = restaurant.getMenu();
-        assertEquals(3, menu.size());
-        assertEquals("Блюдо 1", menu.get(0).getDish().getName());
-        assertEquals("Блюдо 2", menu.get(1).getDish().getName());
-        assertEquals("Блюдо 3", menu.get(2).getDish().getName());
-        assertTrue(menu.get(0).getPrice() == 168);
 
-
-    }
 }

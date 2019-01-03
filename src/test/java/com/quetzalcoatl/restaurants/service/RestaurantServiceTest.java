@@ -35,8 +35,8 @@ class RestaurantServiceTest {
     }
 
     @Test
-    void update(){
-        Restaurant updated = new Restaurant(RESTAURANT_1.getId(), RESTAURANT_1.getName(),RESTAURANT_1.getAddress());
+    void update() {
+        Restaurant updated = new Restaurant(RESTAURANT_1.getId(), RESTAURANT_1.getName(), RESTAURANT_1.getAddress());
         updated.setName("Updated Name");
         updated.setAddress("Updated Address");
         service.update(updated);
@@ -46,7 +46,7 @@ class RestaurantServiceTest {
 
     @Test
     void delete() {
-       service.delete(RESTAURANT_1_ID);
+        service.delete(RESTAURANT_1_ID);
         assertThat(service.getAll()).isEqualTo(List.of(RESTAURANT_2, RESTAURANT_3));
     }
 
@@ -76,24 +76,13 @@ class RestaurantServiceTest {
     }
 
     @Test
-    void getByIdWithMenu() {
-        Restaurant restaurant = service.getByIdWithMenu(RESTAURANT_1_ID);
-        List<Menu> menu = restaurant.getMenu();
-        assertEquals(3, menu.size());
-        assertEquals("Блюдо 1", menu.get(0).getDish().getName());
-        assertEquals("Блюдо 2", menu.get(1).getDish().getName());
-        assertEquals("Блюдо 3", menu.get(2).getDish().getName());
-        assertTrue(menu.get(0).getPrice() == 168);
-
-    }
-
-
-    @Test
-    void getWithMenuOnDate() {
-        Restaurant restaurant = service.getByIdWithMenuOnDate(RESTAURANT_1_ID, LocalDate.of(2018, 12, 31));
-        List<Menu> menu = restaurant.getMenu();
+    void getAllWithMenuOnDate() {
+        List<Restaurant> restaurants = service.getAllWithMenuOnDate(LocalDate.of(2018, 12, 31));
+        assertEquals(1, restaurants.size());
+        List<Menu> menu = restaurants.get(0).getMenu();
         assertEquals(1, menu.size());
         assertEquals("Блюдо 3", menu.get(0).getDish().getName());
+
     }
 
 }
