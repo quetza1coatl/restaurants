@@ -42,7 +42,7 @@ public class Restaurant extends AbstractBaseEntity {
     @Size(min = 5, max = 100)
     private String address;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Menu> menu;
 
 
