@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.quetzalcoatl.restaurants.RestaurantTestData.*;
+import static com.quetzalcoatl.restaurants.TestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +31,7 @@ class RestaurantServiceTest {
         Restaurant newRestaurant = new Restaurant("Ресторан 4", "Вильнюс");
         Restaurant created = service.create(newRestaurant);
         newRestaurant.setId(created.getId());
-        assertThat(service.getAll()).isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, newRestaurant));
+        assertThat(service.getAll()).usingElementComparatorIgnoringFields("menu", "registered").isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, newRestaurant));
     }
 
     @Test

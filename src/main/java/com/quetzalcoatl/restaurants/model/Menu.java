@@ -18,6 +18,17 @@ public class Menu extends AbstractBaseEntity{
 
     }
 
+    public Menu(Integer price, LocalDate date) {
+        this.price = price;
+        this.date = date;
+    }
+
+    public Menu(Integer id, Integer price, LocalDate date){
+        super(id);
+        this.price = price;
+        this.date = date;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
