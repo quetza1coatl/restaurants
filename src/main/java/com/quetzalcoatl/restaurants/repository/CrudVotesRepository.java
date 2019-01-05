@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface CrudVotesRepository extends JpaRepository<Votes, Integer> {
@@ -20,7 +21,8 @@ public interface CrudVotesRepository extends JpaRepository<Votes, Integer> {
     @Query("SELECT v FROM Votes v WHERE v.restaurant.id=:restaurantId ORDER BY v.dateTime DESC")
     List<Votes> getByRestaurantId(@Param("restaurantId") int restaurantId);
 
-    Votes findById(int id);
+    @Override
+    Optional<Votes> findById(Integer id);
 
 
 

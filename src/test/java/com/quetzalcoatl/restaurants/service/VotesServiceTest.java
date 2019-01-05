@@ -40,10 +40,10 @@ class VotesServiceTest {
     @Disabled("Can throw LateToVoteException")
     @Test
     void update() {
-        Votes voteToUpdate = service.findById(VOTE_1_ID);
+        Votes voteToUpdate = service.get(VOTE_1_ID);
         LocalDateTime beforeUpdate = voteToUpdate.getDateTime();
         service.update(voteToUpdate, RESTAURANT_2_ID);
-        Votes updated = service.findById(VOTE_1_ID);
+        Votes updated = service.get(VOTE_1_ID);
         assertEquals(RESTAURANT_2_ID, updated.getRestaurant().getId().intValue());
         assertFalse(updated.getDateTime().isEqual(beforeUpdate));
 

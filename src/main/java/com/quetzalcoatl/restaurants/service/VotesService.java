@@ -69,8 +69,8 @@ public class VotesService {
         return repository.getByRestaurantId(id);
     }
 
-    public Votes findById(int id){
-        return repository.findById(id);
+    public Votes get(Integer id){
+        return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
     private boolean isLate(LocalTime time, LocalDate actualDate, LocalDate dateFromVote) {
