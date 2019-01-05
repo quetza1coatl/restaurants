@@ -3,13 +3,16 @@ package com.quetzalcoatl.restaurants.model;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.Set;
 
 @Entity
@@ -21,9 +24,14 @@ public class User extends AbstractBaseEntity {
     @Size(max = 100)
     private String email;
 
+    @Column(name = "name", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 100)
+    private String name;
+
     @Column(name = "password", nullable = false)
     @NotBlank
-    @Size(min = 5, max = 100)
+    @Size(min = 4, max = 100)
     private String password;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
@@ -44,6 +52,34 @@ public class User extends AbstractBaseEntity {
 
     public User() {
     }
+
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        enabled = true;
+        registered = new Date();
+        this.roles = EnumSet.of(role, roles);
+    }
+
+    public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Collection<Role> roles) {
+        super(id);
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.enabled = enabled;
+        this.registered = registered;
+        setRoles(roles);
+    }
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.enabled, u.registered, u.getRoles());
+    }
+
+
+    public String getName() {return name;}
+
+    public void setName(String name) {this.name = name;}
 
     public String getEmail() {
         return email;
@@ -81,7 +117,18 @@ public class User extends AbstractBaseEntity {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email=" + email +
+                ", name=" + name +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                '}';
     }
 }

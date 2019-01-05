@@ -2,6 +2,8 @@ package com.quetzalcoatl.restaurants;
 
 import com.quetzalcoatl.restaurants.model.Menu;
 import com.quetzalcoatl.restaurants.model.Restaurant;
+import com.quetzalcoatl.restaurants.model.Role;
+import com.quetzalcoatl.restaurants.model.User;
 
 import java.time.LocalDate;
 
@@ -17,6 +19,7 @@ public class TestData {
     public static final int MENU_3_ID = START_SEQ + 16;
 
     public static final int USER_1_ID = START_SEQ;
+    public static final int USER_2_ID = START_SEQ + 1;
 
     public static final int DISH_1_ID = START_SEQ + 13;
 
@@ -30,6 +33,9 @@ public class TestData {
     public static final Menu MENU_1 = new Menu(MENU_1_ID, 168, LocalDate.of(2018,12,30));
     public static final Menu MENU_2 = new Menu(MENU_2_ID, 257, LocalDate.of(2018,12,30));
     public static final Menu MENU_3 = new Menu(MENU_3_ID, 132, LocalDate.of(2018,12,31));
+
+    public static final User USER = new User(USER_1_ID, "User", "user@gmail.com", "user1", Role.ROLE_USER);
+    public static final User ADMIN = new User(USER_2_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN);
 
 
 }
