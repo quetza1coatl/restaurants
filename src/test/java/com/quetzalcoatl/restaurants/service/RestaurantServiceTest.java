@@ -2,7 +2,7 @@ package com.quetzalcoatl.restaurants.service;
 
 import com.quetzalcoatl.restaurants.model.Menu;
 import com.quetzalcoatl.restaurants.model.Restaurant;
-import com.quetzalcoatl.restaurants.util.NotFoundException;
+import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
@@ -10,6 +10,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import static com.quetzalcoatl.restaurants.TestData.*;
@@ -82,6 +83,8 @@ class RestaurantServiceTest {
         List<Menu> menu = restaurants.get(0).getMenu();
         assertEquals(1, menu.size());
         assertEquals("Блюдо 3", menu.get(0).getDish().getName());
+        List<Restaurant> emptyExpected = service.getAllWithMenuOnDate(LocalDate.of(2015,11,11));
+        assertThat(emptyExpected).isEqualTo(Collections.EMPTY_LIST);
 
     }
 

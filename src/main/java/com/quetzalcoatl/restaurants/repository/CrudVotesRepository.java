@@ -20,6 +20,8 @@ public interface CrudVotesRepository extends JpaRepository<Votes, Integer> {
     @Query("SELECT v FROM Votes v WHERE v.restaurant.id=:restaurantId ORDER BY v.dateTime DESC")
     List<Votes> getByRestaurantId(@Param("restaurantId") int restaurantId);
 
+    Votes findById(int id);
+
 
 
 }

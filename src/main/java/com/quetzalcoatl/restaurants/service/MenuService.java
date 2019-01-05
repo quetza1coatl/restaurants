@@ -4,7 +4,7 @@ import com.quetzalcoatl.restaurants.model.Menu;
 import com.quetzalcoatl.restaurants.repository.CrudDishRepository;
 import com.quetzalcoatl.restaurants.repository.CrudMenuRepository;
 import com.quetzalcoatl.restaurants.repository.CrudRestaurantRepository;
-import com.quetzalcoatl.restaurants.util.NotFoundException;
+import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

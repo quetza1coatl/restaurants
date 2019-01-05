@@ -1,4 +1,4 @@
-package com.quetzalcoatl.restaurants.util;
+package com.quetzalcoatl.restaurants.util.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

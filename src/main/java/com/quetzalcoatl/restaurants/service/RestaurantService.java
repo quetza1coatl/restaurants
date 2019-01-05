@@ -1,16 +1,14 @@
 package com.quetzalcoatl.restaurants.service;
 
-import com.quetzalcoatl.restaurants.model.Menu;
 import com.quetzalcoatl.restaurants.model.Restaurant;
 import com.quetzalcoatl.restaurants.repository.CrudRestaurantRepository;
-import com.quetzalcoatl.restaurants.util.NotFoundException;
+import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.quetzalcoatl.restaurants.util.ValidationUtil.checkNotFoundWithId;
 

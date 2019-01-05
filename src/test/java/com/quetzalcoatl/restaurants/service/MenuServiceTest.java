@@ -1,7 +1,7 @@
 package com.quetzalcoatl.restaurants.service;
 
 import com.quetzalcoatl.restaurants.model.Menu;
-import com.quetzalcoatl.restaurants.util.NotFoundException;
+import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;

@@ -1,6 +1,7 @@
 package com.quetzalcoatl.restaurants.util;
 
 import com.quetzalcoatl.restaurants.model.AbstractBaseEntity;
+import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 
 public class ValidationUtil {
 

@@ -46,6 +46,6 @@ VALUES (12, 15,'2018-12-30', 168),
        (14, 22,'2018-12-30', 321),
        (14, 23,'2018-12-30', 816); --32
 
-INSERT INTO votes (restaurant_id, user_id)
-VALUES (12, 10),
-       (14, 11);
+INSERT INTO votes (restaurant_id, user_id, date_time)
+VALUES (12, 10, '2019-01-05 09:00:00'),
+       (14, 11, '2019-01-05 08:30:00');
