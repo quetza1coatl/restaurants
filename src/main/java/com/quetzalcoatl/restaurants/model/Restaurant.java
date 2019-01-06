@@ -1,5 +1,6 @@
 package com.quetzalcoatl.restaurants.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -42,6 +43,7 @@ public class Restaurant extends AbstractBaseEntity {
     @Size(min = 5, max = 100)
     private String address;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<Menu> menu;
 

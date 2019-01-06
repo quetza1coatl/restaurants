@@ -65,6 +65,7 @@ public class VotesService {
         return repository.findAll();
     }
 
+    //vote history
     public List<Votes> getAllByRestaurantId(int id) {
         return repository.getByRestaurantId(id);
     }
