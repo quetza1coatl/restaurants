@@ -8,12 +8,11 @@ import com.quetzalcoatl.restaurants.util.exceptions.LateToVoteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.quetzalcoatl.restaurants.util.ValidationUtil.checkNotFoundWithId;
 
@@ -23,6 +22,8 @@ public class VotesService {
     private final CrudVotesRepository repository;
     private final CrudUserRepository userRepository;
     private final CrudRestaurantRepository restaurantRepository;
+
+    private final LocalTime VOTING_TIME = LocalTime.of(11,0);
 
     @Autowired
     public VotesService(CrudVotesRepository repository,
@@ -34,14 +35,13 @@ public class VotesService {
     }
 
     @Transactional
-    public Votes create(int restaurantId, int userId) {
-        LocalDateTime dateTime = LocalDateTime.now();
+    public Votes create(int restaurantId, int userId, LocalDateTime dateTime) {
         if (isLateByTime(dateTime.toLocalTime())) {
             throw new LateToVoteException("It is late to vote");
         }
         Votes vote = new Votes();
-        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
-        vote.setUser(userRepository.getOne(userId));
+        vote.setRestaurant(restaurantRepository.findById(restaurantId).get());
+        vote.setUser(userRepository.findById(userId).get());
         vote.setDateTime(dateTime);
         return repository.save(vote);
 
@@ -49,9 +49,8 @@ public class VotesService {
     }
 
     @Transactional
-    public Votes update(Votes vote, int newRestaurantId) {
-        Assert.notNull(vote, "vote must not be null");
-        LocalDateTime dateTime = LocalDateTime.now();
+    public Votes update(int voteId, int newRestaurantId, LocalDateTime dateTime) {
+        Votes vote = repository.findById(voteId).orElseThrow();
         if (isLate(dateTime.toLocalTime(), dateTime.toLocalDate(), vote.getDateTime().toLocalDate())) {
             throw new LateToVoteException("It is late to vote");
         }
@@ -65,21 +64,42 @@ public class VotesService {
         return repository.findAll();
     }
 
+    public boolean isVotesOnDate(int userId, LocalDate date) {
+        List<LocalDateTime> list = repository.getDateTimeByUser(userId);
+        List<LocalDate> dateList = list.stream()
+                .map(d -> d.toLocalDate())
+                .distinct()
+                .filter(d -> d.isEqual(date))
+                .collect(Collectors.toList());
+        return !dateList.isEmpty();
+
+    }
+
+    public int getVoteIdByUserAndDate(int userId, LocalDate date){
+        List<Votes> votesByUser = repository.getByUserId(userId);
+        return votesByUser.stream()
+                .filter(v -> (v.getDateTime().toLocalDate().isEqual(date)))
+                .collect(Collectors.toList())
+                .get(0)
+                .getId();
+    }
+
     //vote history
     public List<Votes> getAllByRestaurantId(int id) {
         return repository.getByRestaurantId(id);
     }
 
-    public Votes get(Integer id){
+    public Votes get(Integer id) {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
     private boolean isLate(LocalTime time, LocalDate actualDate, LocalDate dateFromVote) {
-        return time.isAfter(LocalTime.of(11, 0)) || !actualDate.isEqual(dateFromVote);
+        return time.isAfter(VOTING_TIME) || !actualDate.isEqual(dateFromVote);
 
     }
 
     private boolean isLateByTime(LocalTime time) {
-        return time.isAfter(LocalTime.of(11, 0));
+
+        return time.isAfter(VOTING_TIME);
     }
 }

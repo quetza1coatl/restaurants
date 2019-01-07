@@ -9,6 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static com.quetzalcoatl.restaurants.TestData.*;
@@ -23,31 +24,37 @@ import static org.junit.jupiter.api.Assertions.*;
 class VotesServiceTest {
     @Autowired
     VotesService service;
+
     @Disabled("Can throw LateToVoteException")
     @Test
     void create() {
-        Votes created = service.create(RESTAURANT_3_ID, USER_1_ID);
+        Votes created = service.create(RESTAURANT_3_ID, USER_1_ID, LocalDateTime.now());
         assertTrue(service.getAll().size() == 3);
     }
 
     @Test
     void lateToVote() {
         assertThrows(LateToVoteException.class, () ->
-                service.create(RESTAURANT_1_ID, 10));
+                service.create(RESTAURANT_1_ID, USER_1_ID, LocalDateTime.now()));
 
     }
 
     @Disabled("Can throw LateToVoteException")
     @Test
     void update() {
-        Votes voteToUpdate = service.get(VOTE_1_ID);
-        LocalDateTime beforeUpdate = voteToUpdate.getDateTime();
-        service.update(voteToUpdate, RESTAURANT_2_ID);
+        LocalDateTime beforeUpdate = service.get(VOTE_1_ID).getDateTime();
+        service.update(VOTE_1_ID, RESTAURANT_2_ID, beforeUpdate);
         Votes updated = service.get(VOTE_1_ID);
         assertEquals(RESTAURANT_2_ID, updated.getRestaurant().getId().intValue());
-        assertFalse(updated.getDateTime().isEqual(beforeUpdate));
+
 
     }
 
+    @Test
+    void isVotesOnDate(){
+        assertTrue(service.isVotesOnDate(USER_1_ID, LocalDate.of(2019,1,5)));
+        assertFalse(service.isVotesOnDate(USER_1_ID, LocalDate.of(2018,12,31)));
+
+    }
 
 }
