@@ -1,10 +1,13 @@
 package com.quetzalcoatl.restaurants.service;
 
+import com.quetzalcoatl.restaurants.AuthorizedUser;
 import com.quetzalcoatl.restaurants.model.User;
 import com.quetzalcoatl.restaurants.repository.CrudUserRepository;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -15,7 +18,7 @@ import static com.quetzalcoatl.restaurants.util.ValidationUtil.checkNotFound;
 import static com.quetzalcoatl.restaurants.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("userService")
-public class UserService {
+public class UserService implements UserDetailsService {
     private final CrudUserRepository repository;
     private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
 
@@ -58,15 +61,12 @@ public class UserService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
+    }
 }

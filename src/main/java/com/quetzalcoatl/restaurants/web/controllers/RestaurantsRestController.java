@@ -106,6 +106,11 @@ public class RestaurantsRestController {
 
     }
 
+    @GetMapping(value = "/dish",produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Dish> getAllDish() {
+        return dishRepository.findAll();
+    }
+
 
     //history
 
