@@ -81,4 +81,15 @@ public class Menu extends AbstractBaseEntity{
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", restaurant=" + restaurant +
+                ", dish=" + dish +
+                ", price=" + price +
+                ", date=" + date +
+                "} ";
+    }
 }
