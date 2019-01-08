@@ -33,7 +33,7 @@ class UserServiceTest {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", true, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = service.create(new User(newUser));
         newUser.setId(created.getId());
-        assertThat(service.getAll()).usingElementComparatorIgnoringFields("registered").isEqualTo(List.of(ADMIN, newUser, USER));
+        assertThat(service.getAll()).usingElementComparatorIgnoringFields("registered" ,"password").isEqualTo(List.of(ADMIN, newUser, USER));
 
     }
 
@@ -46,7 +46,7 @@ class UserServiceTest {
     @Test
     void delete() {
         service.delete(USER_1_ID);
-        assertThat(service.getAll()).usingElementComparatorIgnoringFields("registered").isEqualTo(List.of(ADMIN));
+        assertThat(service.getAll()).usingElementComparatorIgnoringFields("registered","password").isEqualTo(List.of(ADMIN));
     }
 
     @Test
@@ -58,7 +58,7 @@ class UserServiceTest {
     @Test
     void get()  {
         User user = service.get(USER_2_ID);
-        assertThat(user).isEqualToIgnoringGivenFields(ADMIN, "registered");
+        assertThat(user).isEqualToIgnoringGivenFields(ADMIN, "registered", "password");
     }
 
     @Test
@@ -70,7 +70,7 @@ class UserServiceTest {
     @Test
     void getByEmail(){
         User user = service.getByEmail("admin@gmail.com");
-        assertThat(user).isEqualToIgnoringGivenFields(ADMIN, "registered");
+        assertThat(user).isEqualToIgnoringGivenFields(ADMIN, "registered", "password");
     }
 
     @Test
@@ -79,13 +79,13 @@ class UserServiceTest {
         updated.setName("UpdatedName");
         updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         service.update(new User(updated));
-        assertThat(service.get(USER_1_ID)).isEqualToIgnoringGivenFields(updated, "registered");
+        assertThat(service.get(USER_1_ID)).isEqualToIgnoringGivenFields(updated, "registered", "password");
     }
 
     @Test
     void getAll() throws Exception {
         List<User> all = service.getAll();
-        assertThat(all).usingElementComparatorIgnoringFields("registered").isEqualTo(List.of(ADMIN, USER));
+        assertThat(all).usingElementComparatorIgnoringFields("registered", "password").isEqualTo(List.of(ADMIN, USER));
     }
 
     @Test
