@@ -86,9 +86,7 @@ public class Menu extends AbstractBaseEntity{
     public String toString() {
         return "Menu{" +
                 "id=" + id +
-                ", restaurant=" + restaurant +
-                ", dish=" + dish +
-                ", price=" + price +
+                 ", price=" + price +
                 ", date=" + date +
                 "} ";
     }

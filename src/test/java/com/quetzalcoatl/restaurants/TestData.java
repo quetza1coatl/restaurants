@@ -26,9 +26,9 @@ public class TestData {
     public static final int VOTE_1_ID = START_SEQ + 23;
 
 
-    public static final Restaurant RESTAURANT_1 = new Restaurant(RESTAURANT_1_ID, "Ресторан 1", "г. Минск, ул. Уличная, 5");
-    public static final Restaurant RESTAURANT_2 = new Restaurant(RESTAURANT_2_ID, "Ресторан 2","г. Минск, пер. Заплутавший, 119");
-    public static final Restaurant RESTAURANT_3 = new Restaurant(RESTAURANT_3_ID, "Ресторан 3", "г. Минск, пр-т Победителей, 1");
+    public static final Restaurant RESTAURANT_1 = new Restaurant(RESTAURANT_1_ID, "Ресторан 1", "Адрес 1");
+    public static final Restaurant RESTAURANT_2 = new Restaurant(RESTAURANT_2_ID, "Ресторан 2","Адрес 2");
+    public static final Restaurant RESTAURANT_3 = new Restaurant(RESTAURANT_3_ID, "Ресторан 3", "Адрес 3");
 
     public static final Menu MENU_1 = new Menu(MENU_1_ID, 168, LocalDate.of(2018,12,30));
     public static final Menu MENU_2 = new Menu(MENU_2_ID, 257, LocalDate.of(2018,12,30));

@@ -52,7 +52,7 @@ public class VotesService {
     public Votes update(int voteId, int newRestaurantId, LocalDateTime dateTime) {
         Votes vote = repository.findById(voteId).orElseThrow();
         if (isLate(dateTime.toLocalTime(), dateTime.toLocalDate(), vote.getDateTime().toLocalDate())) {
-            throw new LateToVoteException("It is late to vote");
+            throw new LateToVoteException("It is late to change your vote");
         }
         vote.setRestaurant(restaurantRepository.getOne(newRestaurantId));
         vote.setDateTime(dateTime);

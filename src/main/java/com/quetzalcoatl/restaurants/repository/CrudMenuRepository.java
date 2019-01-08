@@ -21,6 +21,9 @@ public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
     @Query("DELETE FROM Menu m WHERE m.id=:id")
     int delete(@Param("id") Integer id);
 
+    @Override
+    List<Menu> findAll();
+
     @Query("SELECT m FROM Menu m WHERE m.restaurant.id=:restaurantId ORDER BY m.date DESC, m.id")
     List<Menu> getByRestaurantId(@Param("restaurantId") int restaurantId);
 

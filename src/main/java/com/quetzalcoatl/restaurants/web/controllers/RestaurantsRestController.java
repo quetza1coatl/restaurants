@@ -82,6 +82,12 @@ public class RestaurantsRestController {
 
     //actions with menu
 
+    @GetMapping(value = "/menu", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Menu> getAllMenu() {
+        log.info("get all menu");
+        return menuService.getAll();
+    }
+
     @PostMapping(value = "/menu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> create(@RequestBody MenuTO menu) {
         Menu created = menuService.create(new Menu(menu.getPrice(), menu.getDate()), menu.getRestaurantId(), menu.getDishId());
@@ -128,7 +134,7 @@ public class RestaurantsRestController {
         return menuService.getByRestaurantId(id);
     }
 
-    //returns id, restaurant_id, user_id, dateTime
+    //(returns id, restaurant_id, user_id, dateTime)
     @GetMapping(value = "/vote/history/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Votes> getVoteHistoryByRestaurantId(@PathVariable("id") int id) {
         log.info("get vote history with restaurant id={}", id);

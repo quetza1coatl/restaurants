@@ -53,6 +53,8 @@ public class MenuService {
         checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
+    public List<Menu> getAll(){return repository.findAll();}
+
     //menu history
     public List<Menu> getByRestaurantId(int restaurantId) {
         return repository.getByRestaurantId(restaurantId);

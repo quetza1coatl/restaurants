@@ -14,7 +14,7 @@ public class JacksonObjectMapper extends ObjectMapper {
 
 
     private JacksonObjectMapper() {
-//регистрируем модуль, позволяющий не сериализовать пустые LAZY коллекции
+
         registerModule(new Hibernate5Module());
         registerModule(new JavaTimeModule());
         configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
