@@ -57,13 +57,13 @@ localhost:8080/rest/profile/register
 
 #### delete user by ID=10 
 `curl -s -X DELETE http://localhost:8080/rest/admin/users/10`  
-###localhost:8080/rest/vote  
+### localhost:8080/rest/vote  
 Ресурс предназначен для получения списка ресторанов с меню на текущий день и голосования.
 #### get all restaurants with menu on current date  
 `curl -s http://localhost:8080/rest/vote`  
 #### vote for restaurant with ID=13 
 `curl -s -X POST -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/vote/13`  
-###localhost:8080/rest/profile/register
+### localhost:8080/rest/profile/register  
 Ресурс предназначен для создания нового пользователя.  
 #### register new user  
 `curl -s -X POST -d '{"email":"luser@gmail.com","name":"Luser","password":"swordfish"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/profile/register`
