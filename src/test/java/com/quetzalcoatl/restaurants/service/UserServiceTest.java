@@ -3,8 +3,10 @@ package com.quetzalcoatl.restaurants.service;
 import com.quetzalcoatl.restaurants.model.Role;
 import com.quetzalcoatl.restaurants.model.User;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -27,6 +29,14 @@ class UserServiceTest {
 
     @Autowired
     UserService service;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        cacheManager.getCache("users").clear();
+    }
 
     @Test
     void create(){

@@ -5,6 +5,8 @@ import com.quetzalcoatl.restaurants.model.User;
 import com.quetzalcoatl.restaurants.repository.CrudUserRepository;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,8 +23,10 @@ import static com.quetzalcoatl.restaurants.util.ValidationUtil.checkNotFoundWith
 
 @Service("userService")
 public class UserService implements UserDetailsService {
+
     private final CrudUserRepository repository;
     private final PasswordEncoder passwordEncoder;
+
     private static final Sort SORT_NAME_EMAIL = new Sort(Sort.Direction.ASC, "name", "email");
 
     @Autowired
@@ -31,17 +35,19 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
+    @CacheEvict(value = "users", allEntries = true)
     public User create(User user) {
         Assert.notNull(user, "user must not be null");
         return repository.save(prepareToSave(user, passwordEncoder));
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         checkNotFoundWithId(repository.save(prepareToSave(user, passwordEncoder)), user.getId());
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(repository.delete(id) != 0, id);
     }
@@ -55,18 +61,18 @@ public class UserService implements UserDetailsService {
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
-
+    @Cacheable("users")
     public List<User> getAll() {
         return repository.findAll(SORT_NAME_EMAIL);
     }
 
     @Transactional
+    @CacheEvict(value = "users", allEntries = true)
     public void enable(int id, boolean enabled) {
         User user = get(id);
         user.setEnabled(enabled);
 
     }
-
 
     @Override
     public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {

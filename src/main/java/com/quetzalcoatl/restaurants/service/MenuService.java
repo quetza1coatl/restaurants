@@ -6,6 +6,7 @@ import com.quetzalcoatl.restaurants.repository.CrudMenuRepository;
 import com.quetzalcoatl.restaurants.repository.CrudRestaurantRepository;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -29,6 +30,7 @@ public class MenuService {
         this.dishRepository = dishRepository;
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
     public Menu create(Menu menu, int restaurantId, int dishId) {
         Assert.notNull(menu, "menu must not be null");
@@ -37,6 +39,7 @@ public class MenuService {
         return repository.save(menu);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Menu update(Menu menu, int restaurantId, int dishId) throws NotFoundException {
         Assert.notNull(menu, "menu must not be null");
         menu.setRestaurant(restaurantRepository.getOne(restaurantId));
@@ -49,6 +52,7 @@ public class MenuService {
 
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public void delete(int id) throws NotFoundException {
         checkNotFoundWithId(repository.delete(id) != 0, id);
     }
