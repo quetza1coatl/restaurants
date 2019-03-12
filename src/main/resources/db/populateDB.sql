@@ -1,5 +1,5 @@
 DELETE FROM user_roles;
-DELETE FROM menu;
+DELETE FROM menu_item;
 DELETE FROM votes;
 DELETE FROM restaurants;
 DELETE FROM dishes;
@@ -34,7 +34,7 @@ VALUES ('Блюдо 1'), --15
        ('Блюдо 8'),
        ('Блюдо 9'); --23
 
-INSERT INTO menu (restaurant_id, dish_id, date, price)
+INSERT INTO menu_item (restaurant_id, dish_id, date, price)
 VALUES (12, 15,'2018-12-30', 168),
        (12, 16,'2018-12-30', 257),
        (12, 17,'2018-12-31', 132),

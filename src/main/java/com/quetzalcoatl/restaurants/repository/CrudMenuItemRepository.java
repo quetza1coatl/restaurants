@@ -1,6 +1,6 @@
 package com.quetzalcoatl.restaurants.repository;
 
-import com.quetzalcoatl.restaurants.model.Menu;
+import com.quetzalcoatl.restaurants.model.MenuItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,22 +10,22 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
+public interface CrudMenuItemRepository extends JpaRepository<MenuItem, Integer> {
 
     @Override
     @Transactional
-    Menu save(Menu menu);
+    MenuItem save(MenuItem menuItem);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Menu m WHERE m.id=:id")
+    @Query("DELETE FROM MenuItem m WHERE m.id=:id")
     int delete(@Param("id") Integer id);
 
     @Override
-    List<Menu> findAll();
+    List<MenuItem> findAll();
 
-    @Query("SELECT m FROM Menu m WHERE m.restaurant.id=:restaurantId ORDER BY m.date DESC, m.id")
-    List<Menu> getByRestaurantId(@Param("restaurantId") int restaurantId);
+    @Query("SELECT m FROM MenuItem m WHERE m.restaurant.id=:restaurantId ORDER BY m.date DESC, m.id")
+    List<MenuItem> getByRestaurantId(@Param("restaurantId") int restaurantId);
 
 
 

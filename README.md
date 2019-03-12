@@ -20,7 +20,7 @@ localhost:8080/rest/profile/register
 обычный пользователь: user@gmail.com:user1  
 
 ###  localhost:8080/rest/restaurants/**   
-Ресурс предназначен для работы с ресторанами, их меню и блюдами, а также предоставляет историю еды и голосований.  
+Ресурс предназначен для работы с ресторанами, элементами меню и блюдами, а также предоставляет историю еды и голосований.  
 Меню ресторана на текущий день формируется путем добавления в него еды из справочника (Dish). Цена на блюдо представлена Integer, если необходимо выделение рублей/копеек - это осуществляется на фронте.  
   
 #### get all Restaurants  
@@ -31,17 +31,17 @@ localhost:8080/rest/profile/register
 `curl -s -X POST -d '{"name":"Restaurant 4","address":"Paris"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/restaurants`  
 #### delete restaurant with ID=12
 `curl -s -X DELETE http://localhost:8080/rest/restaurants/12`  
-#### create new menu  
-`curl -s -X POST -d '{"restaurantId":"12","dishId":"20","price":"129","date":"2019-01-08"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/restaurants/menu`  
-#### get all menu
-`curl -s http://localhost:8080/rest/restaurants/menu`
-#### delete menu with ID=30
-`curl -s -X DELETE http://localhost:8080/rest/restaurants/menu/30`  
+#### create new menu item  
+`curl -s -X POST -d '{"restaurantId":"12","dishId":"20","price":"129","date":"2019-01-08"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/restaurants/menu-item`  
+#### get all menu items
+`curl -s http://localhost:8080/rest/restaurants/menu-item`
+#### delete menu item with ID=30
+`curl -s -X DELETE http://localhost:8080/rest/restaurants/menu-item/30`  
 #### create new dish
 `curl -s -X POST -d '{"name":"newDish"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/restaurants/dish`  
 #### get all dishes
 `curl -s http://localhost:8080/rest/restaurants/dish`  
-#### get menu history by restaurant ID=14
+#### get menu items history by restaurant ID=14
 `curl -s http://localhost:8080/rest/restaurants/history/14`  
 #### get vote history by restaurant ID=13 (returns vote id, restaurant_id, user_id, dateTime of voting)  
 `curl -s http://localhost:8080/rest/restaurants/vote/history/13`

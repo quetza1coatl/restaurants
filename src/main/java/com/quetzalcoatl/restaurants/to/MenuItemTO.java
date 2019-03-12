@@ -7,13 +7,13 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class MenuTO implements Serializable {
+public class MenuItemTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public MenuTO() {
+    public MenuItemTO() {
     }
 
-    public MenuTO(Integer id, Integer restaurantId, Integer dishId, Integer price, LocalDate date) {
+    public MenuItemTO(Integer id, Integer restaurantId, Integer dishId, Integer price, LocalDate date) {
         this.id = id;
         this.restaurantId = restaurantId;
         this.dishId = dishId;
@@ -21,7 +21,7 @@ public class MenuTO implements Serializable {
         this.date = date;
     }
 
-    public MenuTO(Integer restaurantId, Integer dishId, Integer price, LocalDate date) {
+    public MenuItemTO(Integer restaurantId, Integer dishId, Integer price, LocalDate date) {
         this.restaurantId = restaurantId;
         this.dishId = dishId;
         this.price = price;

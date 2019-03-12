@@ -1,6 +1,6 @@
 package com.quetzalcoatl.restaurants.service;
 
-import com.quetzalcoatl.restaurants.model.Menu;
+import com.quetzalcoatl.restaurants.model.MenuItem;
 import com.quetzalcoatl.restaurants.model.Restaurant;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class RestaurantServiceTest {
         Restaurant newRestaurant = new Restaurant("Ресторан 4", "Вильнюс");
         Restaurant created = service.create(newRestaurant);
         newRestaurant.setId(created.getId());
-        assertThat(service.getAll()).usingElementComparatorIgnoringFields("menu", "registered").isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, newRestaurant));
+        assertThat(service.getAll()).usingElementComparatorIgnoringFields("menuItems", "registered").isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, newRestaurant));
     }
 
     @Test
@@ -41,7 +41,7 @@ class RestaurantServiceTest {
         updated.setName("Updated Name");
         updated.setAddress("Updated Address");
         service.update(updated);
-        assertThat(service.get(RESTAURANT_1_ID)).isEqualToIgnoringGivenFields(updated, "registered", "menu");
+        assertThat(service.get(RESTAURANT_1_ID)).isEqualToIgnoringGivenFields(updated, "registered", "menuItems");
 
     }
 
@@ -60,7 +60,7 @@ class RestaurantServiceTest {
     @Test
     void get() {
         Restaurant restaurant = service.get(RESTAURANT_1_ID);
-        assertThat(restaurant).isEqualToIgnoringGivenFields(RESTAURANT_1, "registered", "menu");
+        assertThat(restaurant).isEqualToIgnoringGivenFields(RESTAURANT_1, "registered", "menuItems");
     }
 
     @Test
@@ -72,7 +72,7 @@ class RestaurantServiceTest {
     @Test
     void getAll() {
         List<Restaurant> actual = service.getAll();
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "menu")
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "menuItems")
                 .isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3));
     }
 
@@ -80,9 +80,9 @@ class RestaurantServiceTest {
     void getAllWithMenuOnDate() {
         List<Restaurant> restaurants = service.getAllWithMenuOnDate(LocalDate.of(2018, 12, 31));
         assertEquals(1, restaurants.size());
-        List<Menu> menu = restaurants.get(0).getMenu();
-        assertEquals(1, menu.size());
-        assertEquals("Блюдо 3", menu.get(0).getDish().getName());
+        List<MenuItem> menuItems = restaurants.get(0).getMenuItems();
+        assertEquals(1, menuItems.size());
+        assertEquals("Блюдо 3", menuItems.get(0).getDish().getName());
         List<Restaurant> emptyExpected = service.getAllWithMenuOnDate(LocalDate.of(2015,11,11));
         assertThat(emptyExpected).isEqualTo(Collections.EMPTY_LIST);
 

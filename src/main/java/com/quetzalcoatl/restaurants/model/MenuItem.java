@@ -12,19 +12,19 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "menu")
-public class Menu extends AbstractBaseEntity{
+@Table(name = "menu_item")
+public class MenuItem extends AbstractBaseEntity{
 
-    public Menu() {
+    public MenuItem() {
 
     }
 
-    public Menu(Integer price, LocalDate date) {
+    public MenuItem(Integer price, LocalDate date) {
         this.price = price;
         this.date = date;
     }
 
-    public Menu(Integer id, Integer price, LocalDate date){
+    public MenuItem(Integer id, Integer price, LocalDate date){
         super(id);
         this.price = price;
         this.date = date;
@@ -84,7 +84,7 @@ public class Menu extends AbstractBaseEntity{
 
     @Override
     public String toString() {
-        return "Menu{" +
+        return "MenuItem{" +
                 "id=" + id +
                  ", price=" + price +
                 ", date=" + date +

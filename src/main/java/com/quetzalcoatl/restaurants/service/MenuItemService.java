@@ -1,8 +1,8 @@
 package com.quetzalcoatl.restaurants.service;
 
-import com.quetzalcoatl.restaurants.model.Menu;
+import com.quetzalcoatl.restaurants.model.MenuItem;
 import com.quetzalcoatl.restaurants.repository.CrudDishRepository;
-import com.quetzalcoatl.restaurants.repository.CrudMenuRepository;
+import com.quetzalcoatl.restaurants.repository.CrudMenuItemRepository;
 import com.quetzalcoatl.restaurants.repository.CrudRestaurantRepository;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +15,16 @@ import java.util.List;
 
 import static com.quetzalcoatl.restaurants.util.ValidationUtil.checkNotFoundWithId;
 
-@Service("menuService")
-public class MenuService {
-    private final CrudMenuRepository repository;
+@Service("menuItemService")
+public class MenuItemService {
+    private final CrudMenuItemRepository repository;
     private final CrudRestaurantRepository restaurantRepository;
     private final CrudDishRepository dishRepository;
 
     @Autowired
-    public MenuService(CrudMenuRepository repository,
-                       CrudRestaurantRepository restaurantRepository,
-                       CrudDishRepository dishRepository) {
+    public MenuItemService(CrudMenuItemRepository repository,
+                           CrudRestaurantRepository restaurantRepository,
+                           CrudDishRepository dishRepository) {
         this.repository = repository;
         this.restaurantRepository = restaurantRepository;
         this.dishRepository = dishRepository;
@@ -32,7 +32,7 @@ public class MenuService {
 
     @CacheEvict(value = "restaurants", allEntries = true)
     @Transactional
-    public Menu create(Menu menu, int restaurantId, int dishId) {
+    public MenuItem create(MenuItem menu, int restaurantId, int dishId) {
         Assert.notNull(menu, "menu must not be null");
         menu.setRestaurant(restaurantRepository.getOne(restaurantId));
         menu.setDish(dishRepository.getOne(dishId));
@@ -40,14 +40,14 @@ public class MenuService {
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
-    public Menu update(Menu menu, int restaurantId, int dishId) throws NotFoundException {
+    public MenuItem update(MenuItem menu, int restaurantId, int dishId) throws NotFoundException {
         Assert.notNull(menu, "menu must not be null");
         menu.setRestaurant(restaurantRepository.getOne(restaurantId));
         menu.setDish(dishRepository.getOne(dishId));
         return checkNotFoundWithId(repository.save(menu), menu.getId());
     }
 
-    public Menu get(int id) throws NotFoundException {
+    public MenuItem get(int id) throws NotFoundException {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
 
     }
@@ -57,10 +57,10 @@ public class MenuService {
         checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
-    public List<Menu> getAll(){return repository.findAll();}
+    public List<MenuItem> getAll(){return repository.findAll();}
 
     //menu history
-    public List<Menu> getByRestaurantId(int restaurantId) {
+    public List<MenuItem> getByRestaurantId(int restaurantId) {
         return repository.getByRestaurantId(restaurantId);
 
     }

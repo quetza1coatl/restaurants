@@ -44,14 +44,14 @@ class CrudRestaurantRepositoryTest {
     @Test
     void findAll() {
         List<Restaurant> actual = repository.findAll();
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "menu")
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "menuItems")
                 .isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3));
     }
 
     @Test
     void findById() {
         Restaurant restaurant = repository.findById(RESTAURANT_1_ID).get();
-        assertThat(restaurant).isEqualToIgnoringGivenFields(RESTAURANT_1, "registered", "menu");
+        assertThat(restaurant).isEqualToIgnoringGivenFields(RESTAURANT_1, "registered", "menuItems");
     }
 
 

@@ -45,7 +45,7 @@ public class Restaurant extends AbstractBaseEntity {
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<Menu> menu;
+    private List<MenuItem> menuItems;
 
 
 
@@ -73,12 +73,12 @@ public class Restaurant extends AbstractBaseEntity {
         this.address = address;
     }
 
-    public List<Menu> getMenu() {
-        return menu;
+    public List<MenuItem> getMenuItems() {
+        return menuItems;
     }
 
-    public void setMenu(List<Menu> menu) {
-        this.menu = menu;
+    public void setMenuItems(List<MenuItem> menuItems) {
+        this.menuItems = menuItems;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class Restaurant extends AbstractBaseEntity {
                 ", name=" + name +
                 ", registered=" + registered +
                 ", address=" + address +
-                ", menu=" + menu +
+                ", menuItems=" + menuItems +
                 ", id=" + id +
                 "} ";
     }
