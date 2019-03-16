@@ -9,7 +9,9 @@
         <http-basic/>
         <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/rest/restaurants/**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/rest/vote" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/rest/menu-items/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/rest/dishes" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/rest/vote/restaurants/**" access="hasRole('ROLE_USER')"/>
         <intercept-url pattern="/rest/profile/register" access="isAnonymous()"/>
         <csrf disabled="true"/>
     </http>

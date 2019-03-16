@@ -18,7 +18,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 @RestController
 @RequestMapping(VoteRestController.REST_URL)
 public class VoteRestController {
-    static final String REST_URL = "/rest/vote";
+    static final String REST_URL = "/rest/vote/restaurants";
 
     private final VotesService votesService;
     private final RestaurantService restaurantService;
