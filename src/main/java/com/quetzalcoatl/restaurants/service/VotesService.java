@@ -23,7 +23,7 @@ public class VotesService {
     private final CrudUserRepository userRepository;
     private final CrudRestaurantRepository restaurantRepository;
 
-    private final LocalTime VOTING_TIME = LocalTime.of(11,0);
+    private final LocalTime REVOTE_TIME = LocalTime.of(11,0);
 
     @Autowired
     public VotesService(CrudVotesRepository repository,
@@ -36,9 +36,6 @@ public class VotesService {
 
     @Transactional
     public Votes create(int restaurantId, int userId, LocalDateTime dateTime) {
-        if (isLateByTime(dateTime.toLocalTime())) {
-            throw new LateToVoteException("It is late to vote");
-        }
         Votes vote = new Votes();
         vote.setRestaurant(restaurantRepository.findById(restaurantId).get());
         vote.setUser(userRepository.findById(userId).get());
@@ -94,12 +91,8 @@ public class VotesService {
     }
 
     private boolean isLate(LocalTime time, LocalDate actualDate, LocalDate dateFromVote) {
-        return time.isAfter(VOTING_TIME) || !actualDate.isEqual(dateFromVote);
+        return time.isAfter(REVOTE_TIME) || !actualDate.isEqual(dateFromVote);
 
     }
 
-    private boolean isLateByTime(LocalTime time) {
-
-        return time.isAfter(VOTING_TIME);
-    }
 }

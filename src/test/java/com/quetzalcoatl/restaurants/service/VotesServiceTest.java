@@ -25,20 +25,12 @@ class VotesServiceTest {
     @Autowired
     VotesService service;
 
-    @Disabled("Can throw LateToVoteException")
     @Test
     void create() {
         Votes created = service.create(RESTAURANT_3_ID, USER_1_ID, LocalDateTime.now());
         assertTrue(service.getAll().size() == 3);
     }
 
-    @Disabled("Can throw LateToVoteException")
-    @Test
-    void lateToVote() {
-        assertThrows(LateToVoteException.class, () ->
-                service.create(RESTAURANT_1_ID, USER_1_ID, LocalDateTime.now()));
-
-    }
 
     @Disabled("Can throw LateToVoteException")
     @Test
