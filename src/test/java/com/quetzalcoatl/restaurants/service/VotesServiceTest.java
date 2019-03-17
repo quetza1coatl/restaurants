@@ -1,7 +1,6 @@
 package com.quetzalcoatl.restaurants.service;
 
 import com.quetzalcoatl.restaurants.model.Votes;
-import com.quetzalcoatl.restaurants.util.exceptions.LateToVoteException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ class VotesServiceTest {
 
     @Test
     void create() {
-        Votes created = service.create(RESTAURANT_3_ID, USER_1_ID, LocalDateTime.now());
+        Votes created = service.create(RESTAURANT_3_ID, USER_ID, LocalDateTime.now());
         assertTrue(service.getAll().size() == 3);
     }
 
@@ -45,8 +44,8 @@ class VotesServiceTest {
 
     @Test
     void isVotesOnDate(){
-        assertTrue(service.isVotesOnDate(USER_1_ID, LocalDate.of(2019,1,5)));
-        assertFalse(service.isVotesOnDate(USER_1_ID, LocalDate.of(2018,12,31)));
+        assertTrue(service.isVotesOnDate(USER_ID, LocalDate.of(2019,1,5)));
+        assertFalse(service.isVotesOnDate(USER_ID, LocalDate.of(2018,12,31)));
 
     }
 

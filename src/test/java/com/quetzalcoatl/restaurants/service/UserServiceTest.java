@@ -3,10 +3,8 @@ package com.quetzalcoatl.restaurants.service;
 import com.quetzalcoatl.restaurants.model.Role;
 import com.quetzalcoatl.restaurants.model.User;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -30,13 +28,6 @@ class UserServiceTest {
     @Autowired
     UserService service;
 
-    @Autowired
-    private CacheManager cacheManager;
-
-    @BeforeEach
-    void setUp() throws Exception {
-        cacheManager.getCache("users").clear();
-    }
 
     @Test
     void create(){
@@ -55,7 +46,7 @@ class UserServiceTest {
 
     @Test
     void delete() {
-        service.delete(USER_1_ID);
+        service.delete(USER_ID);
         assertThat(service.getAll()).usingElementComparatorIgnoringFields("registered","password").isEqualTo(List.of(ADMIN));
     }
 
@@ -67,7 +58,7 @@ class UserServiceTest {
 
     @Test
     void get()  {
-        User user = service.get(USER_2_ID);
+        User user = service.get(ADMIN_ID);
         assertThat(user).isEqualToIgnoringGivenFields(ADMIN, "registered", "password");
     }
 
@@ -89,7 +80,7 @@ class UserServiceTest {
         updated.setName("UpdatedName");
         updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         service.update(new User(updated));
-        assertThat(service.get(USER_1_ID)).isEqualToIgnoringGivenFields(updated, "registered", "password");
+        assertThat(service.get(USER_ID)).isEqualToIgnoringGivenFields(updated, "registered", "password");
     }
 
     @Test
@@ -100,10 +91,10 @@ class UserServiceTest {
 
     @Test
     void enable() {
-        service.enable(USER_1_ID, false);
-        assertFalse(service.get(USER_1_ID).isEnabled());
-        service.enable(USER_1_ID, true);
-        assertTrue(service.get(USER_1_ID).isEnabled());
+        service.enable(USER_ID, false);
+        assertFalse(service.get(USER_ID).isEnabled());
+        service.enable(USER_ID, true);
+        assertTrue(service.get(USER_ID).isEnabled());
     }
 
 
