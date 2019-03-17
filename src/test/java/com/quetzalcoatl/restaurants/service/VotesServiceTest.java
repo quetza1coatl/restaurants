@@ -11,7 +11,7 @@ import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static com.quetzalcoatl.restaurants.TestData.*;
+import static com.quetzalcoatl.restaurants.TestValues.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringJUnitWebConfig(locations = {

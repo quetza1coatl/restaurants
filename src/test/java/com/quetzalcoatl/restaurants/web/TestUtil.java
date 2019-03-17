@@ -9,6 +9,8 @@ import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 
 public class TestUtil {
     private TestUtil(){ }
@@ -27,5 +29,15 @@ public class TestUtil {
 
     public static String getContent(MvcResult result) throws UnsupportedEncodingException {
         return result.getResponse().getContentAsString();
+    }
+
+    public static <T> void assertMatch(String[] fields, T actual, T expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, fields);
+    }
+    public static <T> void assertMatch(String[] fields, Iterable<T> actual, Iterable<T> expected) {
+        assertThat(actual).usingElementComparatorIgnoringFields(fields).isEqualTo(expected);
+    }
+    public static <T> void assertMatch(String[] fields, Iterable<T> actual, T... expected) {
+        assertMatch(fields, actual, List.of(expected));
     }
 }

@@ -6,8 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
-import static com.quetzalcoatl.restaurants.TestData.*;
-import static com.quetzalcoatl.restaurants.web.TestUtil.userHttpBasic;
+import java.util.List;
+
+import static com.quetzalcoatl.restaurants.TestValues.*;
+import static com.quetzalcoatl.restaurants.data.UserTestData.FIELDS_TO_IGNORE;
+import static com.quetzalcoatl.restaurants.data.UserTestData.getUserMatcher;
+import static com.quetzalcoatl.restaurants.web.TestUtil.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -53,7 +57,7 @@ class AdminRestControllerTest extends AbstractRestControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
-                assertMatch(service.getAll(), ADMIN);
+                assertMatch(FIELDS_TO_IGNORE, service.getAll(), List.of(ADMIN));
 
 
     }

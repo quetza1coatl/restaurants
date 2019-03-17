@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
-import static com.quetzalcoatl.restaurants.TestData.*;
+import static com.quetzalcoatl.restaurants.TestValues.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
