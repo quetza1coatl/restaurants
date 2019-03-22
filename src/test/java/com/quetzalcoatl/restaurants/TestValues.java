@@ -72,6 +72,10 @@ public final class TestValues {
     public static final User USER = new User(USER_ID, "User", "user@gmail.com", "user1", Role.ROLE_USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN);
 
+    public static final String[] MENU_ITEMS_FIELDS_TO_IGNORE = {"restaurant", "dish"};
+    public static final String[] DISHES_FIELDS_TO_IGNORE = new String[0];
+    public static final String[] USERS_FIELDS_TO_IGNORE = {"registered", "password"};
+
 
 
 

@@ -1,5 +1,6 @@
 package com.quetzalcoatl.restaurants.web.controllers;
 
+import com.quetzalcoatl.restaurants.model.User;
 import com.quetzalcoatl.restaurants.service.UserService;
 import com.quetzalcoatl.restaurants.web.AbstractRestControllerTest;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,6 @@ import org.springframework.http.MediaType;
 import java.util.List;
 
 import static com.quetzalcoatl.restaurants.TestValues.*;
-import static com.quetzalcoatl.restaurants.data.UserTestData.FIELDS_TO_IGNORE;
-import static com.quetzalcoatl.restaurants.data.UserTestData.getUserMatcher;
 import static com.quetzalcoatl.restaurants.web.TestUtil.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -30,7 +29,7 @@ class AdminRestControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(getUserMatcher(ADMIN, USER));
+                .andExpect(getMatcher(USERS_FIELDS_TO_IGNORE,User.class, ADMIN, USER));
     }
 
     @Test
@@ -40,7 +39,7 @@ class AdminRestControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(getUserMatcher(ADMIN));
+                .andExpect(getMatcher(USERS_FIELDS_TO_IGNORE, ADMIN));
     }
     @Test
     void testGetNotFound() throws Exception {
@@ -57,7 +56,7 @@ class AdminRestControllerTest extends AbstractRestControllerTest {
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isNoContent())
                 .andDo(print());
-                assertMatch(FIELDS_TO_IGNORE, service.getAll(), List.of(ADMIN));
+                assertMatch(USERS_FIELDS_TO_IGNORE, service.getAll(), List.of(ADMIN));
 
 
     }

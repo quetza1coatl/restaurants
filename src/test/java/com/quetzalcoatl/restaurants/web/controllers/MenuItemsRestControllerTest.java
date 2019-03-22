@@ -15,12 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.quetzalcoatl.restaurants.TestValues.*;
-import static com.quetzalcoatl.restaurants.data.MenuItemsData.FIELDS_TO_IGNORE;
-import static com.quetzalcoatl.restaurants.data.MenuItemsData.getDishMatcher;
-import static com.quetzalcoatl.restaurants.data.MenuItemsData.getMenuItemsMatcher;
-import static com.quetzalcoatl.restaurants.web.TestUtil.assertMatch;
-import static com.quetzalcoatl.restaurants.web.TestUtil.readFromJsonResultActions;
-import static com.quetzalcoatl.restaurants.web.TestUtil.userHttpBasic;
+import static com.quetzalcoatl.restaurants.web.TestUtil.*;
 import static java.time.LocalDate.of;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -44,7 +39,7 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(getMenuItemsMatcher(MENU_ITEM_LIST));
+                .andExpect(getMatcher(MENU_ITEMS_FIELDS_TO_IGNORE, MenuItem.class, MENU_ITEM_LIST));
     }
 
     @Test
@@ -59,10 +54,10 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
         MenuItem returned = readFromJsonResultActions(action, MenuItem.class);
         created.setId(returned.getId());
 
-        assertMatch(FIELDS_TO_IGNORE,returned, created);
+        assertMatch(MENU_ITEMS_FIELDS_TO_IGNORE,returned, created);
         List<MenuItem> expectedList = new ArrayList<>(MENU_ITEM_LIST);
         expectedList.add(created);
-        assertMatch(FIELDS_TO_IGNORE, service.getAll(), expectedList);
+        assertMatch(MENU_ITEMS_FIELDS_TO_IGNORE, service.getAll(), expectedList);
     }
 
     @Test
@@ -73,7 +68,7 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
                 .andDo(print());
         List<MenuItem> expectedList = new ArrayList<>(MENU_ITEM_LIST);
         expectedList.remove(MENU_ITEM_1);
-        assertMatch(FIELDS_TO_IGNORE, service.getAll(), expectedList);
+        assertMatch(MENU_ITEMS_FIELDS_TO_IGNORE, service.getAll(), expectedList);
     }
 
     @Test
@@ -87,10 +82,10 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
         Dish returned = readFromJsonResultActions(action, Dish.class);
         created.setId(returned.getId());
 
-        assertMatch(new String[0],returned, created);
+        assertMatch(DISHES_FIELDS_TO_IGNORE,returned, created);
         List<Dish> expectedList = new ArrayList<>(DISH_LIST);
         expectedList.add(created);
-        assertMatch(new String[0], dishRepository.findAll(), expectedList);
+        assertMatch(DISHES_FIELDS_TO_IGNORE, dishRepository.findAll(), expectedList);
     }
 
     @Test
@@ -100,7 +95,7 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(getDishMatcher(DISH_LIST));
+                .andExpect(getMatcher(DISHES_FIELDS_TO_IGNORE, Dish.class, DISH_LIST));
 
     }
 

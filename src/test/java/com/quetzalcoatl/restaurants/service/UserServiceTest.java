@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static com.quetzalcoatl.restaurants.data.UserTestData.FIELDS_TO_IGNORE;
 import static com.quetzalcoatl.restaurants.TestValues.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -35,7 +34,7 @@ class UserServiceTest {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", true, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = service.create(new User(newUser));
         newUser.setId(created.getId());
-        assertThat(service.getAll()).usingElementComparatorIgnoringFields(FIELDS_TO_IGNORE).isEqualTo(List.of(ADMIN, newUser, USER));
+        assertThat(service.getAll()).usingElementComparatorIgnoringFields(USERS_FIELDS_TO_IGNORE).isEqualTo(List.of(ADMIN, newUser, USER));
 
     }
 
@@ -48,7 +47,7 @@ class UserServiceTest {
     @Test
     void delete() {
         service.delete(USER_ID);
-        assertThat(service.getAll()).usingElementComparatorIgnoringFields(FIELDS_TO_IGNORE).isEqualTo(List.of(ADMIN));
+        assertThat(service.getAll()).usingElementComparatorIgnoringFields(USERS_FIELDS_TO_IGNORE).isEqualTo(List.of(ADMIN));
     }
 
     @Test
@@ -60,7 +59,7 @@ class UserServiceTest {
     @Test
     void get()  {
         User user = service.get(ADMIN_ID);
-        assertThat(user).isEqualToIgnoringGivenFields(ADMIN, FIELDS_TO_IGNORE);
+        assertThat(user).isEqualToIgnoringGivenFields(ADMIN, USERS_FIELDS_TO_IGNORE);
     }
 
     @Test
@@ -72,7 +71,7 @@ class UserServiceTest {
     @Test
     void getByEmail(){
         User user = service.getByEmail("admin@gmail.com");
-        assertThat(user).isEqualToIgnoringGivenFields(ADMIN, FIELDS_TO_IGNORE);
+        assertThat(user).isEqualToIgnoringGivenFields(ADMIN, USERS_FIELDS_TO_IGNORE);
     }
 
     @Test
@@ -81,13 +80,13 @@ class UserServiceTest {
         updated.setName("UpdatedName");
         updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         service.update(new User(updated));
-        assertThat(service.get(USER_ID)).isEqualToIgnoringGivenFields(updated, FIELDS_TO_IGNORE);
+        assertThat(service.get(USER_ID)).isEqualToIgnoringGivenFields(updated, USERS_FIELDS_TO_IGNORE);
     }
 
     @Test
     void getAll(){
         List<User> all = service.getAll();
-        assertThat(all).usingElementComparatorIgnoringFields(FIELDS_TO_IGNORE).isEqualTo(List.of(ADMIN, USER));
+        assertThat(all).usingElementComparatorIgnoringFields(USERS_FIELDS_TO_IGNORE).isEqualTo(List.of(ADMIN, USER));
     }
 
     @Test

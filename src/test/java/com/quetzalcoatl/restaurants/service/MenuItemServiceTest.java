@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.quetzalcoatl.restaurants.TestValues.*;
-import static com.quetzalcoatl.restaurants.data.MenuItemsData.FIELDS_TO_IGNORE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -33,7 +32,7 @@ class MenuItemServiceTest {
         MenuItem newMenuItem = new MenuItem(255, LocalDate.of(2019, 1,3));
         MenuItem created = service.create(newMenuItem, RESTAURANT_1_ID, DISH_1_ID);
         newMenuItem.setId(created.getId());
-        assertThat(service.getByRestaurantId(RESTAURANT_1_ID)).usingElementComparatorIgnoringFields(FIELDS_TO_IGNORE).isEqualTo(List.of(newMenuItem, MENU_ITEM_3, MENU_ITEM_1, MENU_ITEM_2));
+        assertThat(service.getByRestaurantId(RESTAURANT_1_ID)).usingElementComparatorIgnoringFields(MENU_ITEMS_FIELDS_TO_IGNORE).isEqualTo(List.of(newMenuItem, MENU_ITEM_3, MENU_ITEM_1, MENU_ITEM_2));
     }
 
     @Test
@@ -49,7 +48,7 @@ class MenuItemServiceTest {
     @Test
     void get() {
         MenuItem menuItem = service.get(MENU_ITEM_1_ID);
-        assertThat(menuItem).isEqualToIgnoringGivenFields(MENU_ITEM_1, FIELDS_TO_IGNORE);
+        assertThat(menuItem).isEqualToIgnoringGivenFields(MENU_ITEM_1, MENU_ITEMS_FIELDS_TO_IGNORE);
     }
 
     @Test
@@ -61,11 +60,11 @@ class MenuItemServiceTest {
     @Test
     void delete() {
         service.delete(MENU_ITEM_1_ID);
-        assertThat(service.getByRestaurantId(RESTAURANT_1_ID)).usingElementComparatorIgnoringFields(FIELDS_TO_IGNORE).isEqualTo(List.of(MENU_ITEM_3, MENU_ITEM_2));
+        assertThat(service.getByRestaurantId(RESTAURANT_1_ID)).usingElementComparatorIgnoringFields(MENU_ITEMS_FIELDS_TO_IGNORE).isEqualTo(List.of(MENU_ITEM_3, MENU_ITEM_2));
     }
 
     @Test
     void getByRestaurantId() {
-        assertThat(service.getByRestaurantId(RESTAURANT_1_ID)).usingElementComparatorIgnoringFields(FIELDS_TO_IGNORE).isEqualTo(List.of(MENU_ITEM_3, MENU_ITEM_1, MENU_ITEM_2));
+        assertThat(service.getByRestaurantId(RESTAURANT_1_ID)).usingElementComparatorIgnoringFields(MENU_ITEMS_FIELDS_TO_IGNORE).isEqualTo(List.of(MENU_ITEM_3, MENU_ITEM_1, MENU_ITEM_2));
     }
 }
