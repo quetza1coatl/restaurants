@@ -16,6 +16,11 @@ public class Dish extends AbstractBaseEntity{
         this.name = name;
     }
 
+    public Dish(Integer id, String name) {
+        super(id);
+        this.name = name;
+    }
+
     @Column(name = "name", nullable = false)
     @NotBlank
     @Size(min = 2, max = 100)

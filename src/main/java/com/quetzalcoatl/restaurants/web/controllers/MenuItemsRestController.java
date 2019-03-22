@@ -40,7 +40,7 @@ public class MenuItemsRestController {
     }
 
     @PostMapping(value = "/menu-items", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MenuItem> create(@RequestBody MenuItemTO menuItem) {
+    public ResponseEntity<MenuItem> createMenuItem(@RequestBody MenuItemTO menuItem) {
         MenuItem created = menuItemService.create(new MenuItem(menuItem.getPrice(), menuItem.getDate()), menuItem.getRestaurantId(), menuItem.getDishId());
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/menu-items" + "/{id}")
@@ -52,7 +52,7 @@ public class MenuItemsRestController {
 
     @DeleteMapping("/menu-items/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteMenu(@PathVariable("id") int id) {
+    public void deleteMenuItem(@PathVariable("id") int id) {
         log.info("delete menu item with id={}", id);
         menuItemService.delete(id);
     }
@@ -60,7 +60,7 @@ public class MenuItemsRestController {
     //actions with dishes
 
     @PostMapping(value = "/dishes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> create(@RequestBody Dish dish) {
+    public ResponseEntity<Dish> createDish(@RequestBody Dish dish) {
         Dish created = dishRepository.save(new Dish(dish.getName()));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/dishes" + "/{id}")
@@ -70,7 +70,7 @@ public class MenuItemsRestController {
     }
 
     @GetMapping(value = "/dishes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Dish> getAllDish() {
+    public List<Dish> getAllDishes() {
         log.info("get all dishes");
         return dishRepository.findAll();
     }

@@ -9,7 +9,9 @@ import static com.quetzalcoatl.restaurants.web.TestUtil.assertMatch;
 import static com.quetzalcoatl.restaurants.web.TestUtil.readFromJsonMvcResult;
 import static com.quetzalcoatl.restaurants.web.TestUtil.readListFromJsonMvcResult;
 
-public class UserTestData {
+public final class UserTestData {
+    private UserTestData(){}
+
     public static final String[] FIELDS_TO_IGNORE = {"registered", "password"};
 
     public static ResultMatcher getUserMatcher(User expected) {

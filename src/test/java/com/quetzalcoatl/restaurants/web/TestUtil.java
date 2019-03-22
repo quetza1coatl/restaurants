@@ -4,6 +4,7 @@ import com.quetzalcoatl.restaurants.model.User;
 import com.quetzalcoatl.restaurants.web.json.JsonUtil;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import java.io.UnsupportedEncodingException;
@@ -12,7 +13,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class TestUtil {
+public final class TestUtil {
     private TestUtil(){ }
 
 
@@ -27,7 +28,11 @@ public class TestUtil {
         return JsonUtil.readValues(getContent(result), clazz);
     }
 
-    public static String getContent(MvcResult result) throws UnsupportedEncodingException {
+    public static <T> T readFromJsonResultActions(ResultActions action, Class<T> clazz) throws UnsupportedEncodingException {
+        return readFromJsonMvcResult(action.andReturn(), clazz);
+    }
+
+    private static String getContent(MvcResult result) throws UnsupportedEncodingException {
         return result.getResponse().getContentAsString();
     }
 
