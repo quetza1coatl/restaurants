@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class MenuItemsRestController {
     }
 
     @PostMapping(value = "/menu-items", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MenuItem> createMenuItem(@RequestBody MenuItemTO menuItem) {
+    public ResponseEntity<MenuItem> createMenuItem(@Valid @RequestBody MenuItemTO menuItem) {
         MenuItem created = menuItemService.create(new MenuItem(menuItem.getPrice(), menuItem.getDate()), menuItem.getRestaurantId(), menuItem.getDishId());
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/menu-items" + "/{id}")
@@ -60,7 +61,7 @@ public class MenuItemsRestController {
     //actions with dishes
 
     @PostMapping(value = "/dishes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> createDish(@RequestBody Dish dish) {
+    public ResponseEntity<Dish> createDish(@Valid @RequestBody Dish dish) {
         Dish created = dishRepository.save(new Dish(dish.getName()));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/dishes" + "/{id}")
