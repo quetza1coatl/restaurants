@@ -32,7 +32,7 @@ class RestaurantServiceTest {
         Restaurant newRestaurant = new Restaurant("Ресторан 4", "Вильнюс");
         Restaurant created = service.create(newRestaurant);
         newRestaurant.setId(created.getId());
-        assertThat(service.getAll()).usingElementComparatorIgnoringFields("menuItems", "registered").isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, newRestaurant));
+        assertThat(service.getAll()).usingElementComparatorIgnoringFields(RESTAURANTS_FIELDS_TO_IGNORE).isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, newRestaurant));
     }
 
     @Test
@@ -41,7 +41,7 @@ class RestaurantServiceTest {
         updated.setName("Updated Name");
         updated.setAddress("Updated Address");
         service.update(updated);
-        assertThat(service.get(RESTAURANT_1_ID)).isEqualToIgnoringGivenFields(updated, "registered", "menuItems");
+        assertThat(service.get(RESTAURANT_1_ID)).isEqualToIgnoringGivenFields(updated, RESTAURANTS_FIELDS_TO_IGNORE);
 
     }
 
@@ -60,7 +60,7 @@ class RestaurantServiceTest {
     @Test
     void get() {
         Restaurant restaurant = service.get(RESTAURANT_1_ID);
-        assertThat(restaurant).isEqualToIgnoringGivenFields(RESTAURANT_1, "registered", "menuItems");
+        assertThat(restaurant).isEqualToIgnoringGivenFields(RESTAURANT_1, RESTAURANTS_FIELDS_TO_IGNORE);
     }
 
     @Test
@@ -72,7 +72,7 @@ class RestaurantServiceTest {
     @Test
     void getAll() {
         List<Restaurant> actual = service.getAll();
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "menuItems")
+        assertThat(actual).usingElementComparatorIgnoringFields(RESTAURANTS_FIELDS_TO_IGNORE)
                 .isEqualTo(List.of(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3));
     }
 
