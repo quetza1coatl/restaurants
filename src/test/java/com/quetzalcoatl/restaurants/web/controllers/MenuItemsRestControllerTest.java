@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class MenuItemsRestControllerTest extends AbstractRestControllerTest {
@@ -61,6 +65,19 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
+    void testCreateInvalidMenuItem() throws Exception {
+        MenuItemTO invalid = new MenuItemTO(null, 13,15,0, of(2019,3,21));
+        mockMvc.perform(post(REST_MENU_ITEMS_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.detail").value("price must be between 1 and 9223372036854775807"))
+                .andDo(print());
+    }
+
+
+    @Test
     void testDeleteMenuItem() throws Exception{
         mockMvc.perform(delete(REST_MENU_ITEMS_URL + "/" + MENU_ITEM_1_ID)
                 .with(userHttpBasic(ADMIN)))
@@ -69,6 +86,14 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
         List<MenuItem> expectedList = new ArrayList<>(MENU_ITEM_LIST);
         expectedList.remove(MENU_ITEM_1);
         assertMatch(MENU_ITEMS_FIELDS_TO_IGNORE, service.getAll(), expectedList);
+    }
+
+    @Test
+    void testDeleteNotFoundMenuItem() throws Exception {
+        mockMvc.perform(delete(REST_MENU_ITEMS_URL + "/1")
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
     }
 
     @Test
@@ -86,6 +111,32 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
         List<Dish> expectedList = new ArrayList<>(DISH_LIST);
         expectedList.add(created);
         assertMatch(DISHES_FIELDS_TO_IGNORE, dishRepository.findAll(), expectedList);
+    }
+
+    @Test
+    void testCreateInvalidDish() throws Exception {
+        Dish invalid = new Dish(null, null);
+        mockMvc.perform(post(REST_DISHES_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(invalid))
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("$.detail").value("name must not be blank"))
+                .andDo(print());
+    }
+
+    @Transactional(propagation = Propagation.NEVER)
+    @Test
+    void testCreateDuplicateDish() throws Exception {
+        Dish duplicate = new Dish(null, "Блюдо 1");
+        mockMvc.perform(post(REST_DISHES_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(ADMIN))
+                .content(JsonUtil.writeValue(duplicate)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.detail").value("Dish with this name already exists"))
+                .andDo(print());
+
     }
 
     @Test
