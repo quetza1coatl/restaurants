@@ -18,7 +18,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 @RestController
 @RequestMapping(ProfileRestController.REST_URL)
 public class ProfileRestController {
-    static final String REST_URL = "/rest/profile";
+    static final String REST_URL = "/rest/profile/register";
     private final UserService userService;
     private static final Logger log = getLogger(ProfileRestController.class);
 
@@ -26,7 +26,7 @@ public class ProfileRestController {
         this.userService = userService;
     }
 
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<User> register(@Valid @RequestBody User user) {
         user.setRoles(Collections.singleton(Role.ROLE_USER));

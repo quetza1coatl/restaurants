@@ -38,6 +38,7 @@ public class User extends AbstractBaseEntity {
     private boolean enabled = true;
 
     @Column(name = "registered", columnDefinition = "timestamp default now()")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @NotNull
     private Date registered = new Date();
 

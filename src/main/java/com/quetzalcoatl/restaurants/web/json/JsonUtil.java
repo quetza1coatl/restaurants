@@ -1,10 +1,12 @@
 package com.quetzalcoatl.restaurants.web.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectReader;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static com.quetzalcoatl.restaurants.web.json.JacksonObjectMapper.getMapper;
 
@@ -35,4 +37,11 @@ public class JsonUtil {
             throw new IllegalStateException("Invalid write to JSON:\n'" + obj + "'", e);
         }
     }
+
+    public static <T> String writeAdditionProps(T obj, String addName, Object addValue) {
+        Map<String, Object> map = getMapper().convertValue(obj, new TypeReference<Map<String, Object>>() {});
+        map.putAll(Map.of(addName, addValue));
+        return writeValue(map);
+    }
+
 }

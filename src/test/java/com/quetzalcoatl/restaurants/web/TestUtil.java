@@ -59,5 +59,10 @@ public final class TestUtil {
         return result -> assertMatch(fieldsToIgnore, readListFromJsonMvcResult(result, clazz), expected);
     }
 
-
+    public static String jsonWithPassword(User user, String pass) {
+        return JsonUtil.writeAdditionProps(user, "password", pass);
+    }
 }
+
+
+
