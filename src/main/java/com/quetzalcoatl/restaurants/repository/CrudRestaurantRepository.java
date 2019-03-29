@@ -26,6 +26,6 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     List<Restaurant> findAll();
 
     @Query("SELECT DISTINCT r FROM Restaurant r LEFT JOIN FETCH r.menuItems m WHERE m.date=?1")
-    List<Restaurant> getAllWithMenuOnDate(@Param("date") LocalDate date);
+    List<Restaurant> getAllRestaurantsWithMenuOnDate(@Param("date") LocalDate date);
 
 }

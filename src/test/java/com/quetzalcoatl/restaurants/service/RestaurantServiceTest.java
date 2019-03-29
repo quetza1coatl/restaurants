@@ -78,12 +78,12 @@ class RestaurantServiceTest {
 
     @Test
     void getAllWithMenuOnDate() {
-        List<Restaurant> restaurants = service.getAllWithMenuOnDate(LocalDate.of(2018, 12, 31));
+        List<Restaurant> restaurants = service.getAllRestaurantsWithMenuOnDate(LocalDate.of(2018, 12, 31));
         assertEquals(1, restaurants.size());
         List<MenuItem> menuItems = restaurants.get(0).getMenuItems();
         assertEquals(1, menuItems.size());
         assertEquals("Блюдо 3", menuItems.get(0).getDish().getName());
-        List<Restaurant> emptyExpected = service.getAllWithMenuOnDate(LocalDate.of(2015,11,11));
+        List<Restaurant> emptyExpected = service.getAllRestaurantsWithMenuOnDate(LocalDate.of(2015,11,11));
         assertThat(emptyExpected).isEqualTo(Collections.EMPTY_LIST);
 
     }

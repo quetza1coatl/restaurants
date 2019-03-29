@@ -49,8 +49,8 @@ public class RestaurantService {
     }
 
     @Cacheable("restaurants")
-    public List<Restaurant> getAllWithMenuOnDate(LocalDate date){
-        return repository.getAllWithMenuOnDate(date);
+    public List<Restaurant> getAllRestaurantsWithMenuOnDate(LocalDate date){
+        return repository.getAllRestaurantsWithMenuOnDate(date);
     }
 
 }

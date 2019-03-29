@@ -32,8 +32,8 @@ public final class TestValues {
 
 
     public static final int DISH_1_ID = START_SEQ + 5;
-    private static final int DISH_2_ID = START_SEQ + 6;
-    private static final int DISH_3_ID = START_SEQ + 7;
+    public static final int DISH_2_ID = START_SEQ + 6;
+    public static final int DISH_3_ID = START_SEQ + 7;
     private static final int DISH_4_ID = START_SEQ + 8;
     private static final int DISH_5_ID = START_SEQ + 9;
     private static final int DISH_6_ID = START_SEQ + 10;

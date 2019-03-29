@@ -9,10 +9,14 @@ import com.quetzalcoatl.restaurants.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
+
 import static org.slf4j.LoggerFactory.getLogger;
 
 @RestController
@@ -23,6 +27,7 @@ public class VoteRestController {
     private final VotesService votesService;
     private final RestaurantService restaurantService;
     private static final Logger log = getLogger(VoteRestController.class);
+
     @Autowired
 
     public VoteRestController(VotesService votesService, RestaurantService restaurantService) {
@@ -32,22 +37,27 @@ public class VoteRestController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Restaurant> getAllByMenuDate() {
+    public List<Restaurant> getAllRestaurantsWithMenuOnCurrentDate() {
         log.info("get all restaurants with menu on current date");
-        return restaurantService.getAllWithMenuOnDate(LocalDateTime.now().toLocalDate());
+        return restaurantService.getAllRestaurantsWithMenuOnDate(LocalDateTime.now().toLocalDate());
     }
 
     @PostMapping(value = "/{restaurantId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Votes vote(@PathVariable("restaurantId") int restaurantId) {
+    public ResponseEntity<Votes> vote(@PathVariable("restaurantId") int restaurantId) {
         int userId = SecurityUtil.authUserId();
         LocalDateTime dateTime = LocalDateTime.now();
         if (votesService.isVotesOnDate(userId, dateTime.toLocalDate())) {
             int voteId = votesService.getVoteIdByUserAndDate(userId, dateTime.toLocalDate());
-            log.info("update vote {}", voteId);
-            return votesService.update(voteId, restaurantId, dateTime);
+            votesService.update(voteId, restaurantId, dateTime);
+            log.info("update vote {} with restaurant id={} and user id = {}", voteId, restaurantId, userId);
+            return ResponseEntity.noContent().build();
         } else {
-            log.info("create vote with restaurant id={} and user id = {}",restaurantId, userId);
-            return votesService.create(restaurantId, userId, dateTime);
+            Votes created = votesService.create(restaurantId, userId, dateTime);
+            URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path(REST_URL + "/{restaurantId}")
+                    .buildAndExpand(created.getId()).toUri();
+            log.info("create vote id={} with restaurant id={} and user id = {}", created.getId(), restaurantId, userId);
+            return ResponseEntity.created(uriOfNewResource).body(created);
         }
 
     }
