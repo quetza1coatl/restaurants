@@ -20,14 +20,11 @@ public interface CrudVotesRepository extends JpaRepository<Votes, Integer> {
     @Override
     List<Votes> findAll();
 
-    @Query("SELECT v.date FROM Votes v WHERE v.user.id=:userId ORDER BY v.date DESC, v.time DESC")
-    List<LocalDate> getDateByUser(@Param("userId") int userId);
-
     @Query("SELECT v.id, v.restaurant.id, v.user.id, v.date, v.time FROM Votes v WHERE v.restaurant.id=:restaurantId ORDER BY v.date DESC, v.time DESC")
     List<Votes> getByRestaurantId(@Param("restaurantId") int restaurantId);
 
-    @Query("SELECT v FROM Votes v WHERE v.user.id=:userId ORDER BY v.date DESC, v.time DESC")
-    List<Votes> getByUserId(@Param("userId") int userId);
+    @Query("SELECT v.id FROM Votes v WHERE v.user.id=:userId AND v.date=:date")
+    Integer getVoteIdByUserIdAndDate(@Param("userId") int userId, @Param("date") LocalDate date);
 
     @Override
     Optional<Votes> findById(Integer id);

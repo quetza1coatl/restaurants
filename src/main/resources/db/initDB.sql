@@ -73,4 +73,6 @@ CREATE TABLE votes
 );
 CREATE INDEX vote_date_idx
   ON votes (date);
+CREATE INDEX vote_users_idx
+  ON votes (user_id);
 

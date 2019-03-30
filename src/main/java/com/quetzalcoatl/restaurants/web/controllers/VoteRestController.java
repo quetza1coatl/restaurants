@@ -46,8 +46,8 @@ public class VoteRestController {
     public ResponseEntity<Votes> vote(@PathVariable("restaurantId") int restaurantId) {
         int userId = SecurityUtil.authUserId();
         LocalDateTime dateTime = LocalDateTime.now();
-        if (votesService.isVotesOnDate(userId, dateTime.toLocalDate())) {
-            int voteId = votesService.getVoteIdByUserAndDate(userId, dateTime.toLocalDate());
+        Integer voteId = votesService.getVoteIdByUserIdAndDate(userId, dateTime.toLocalDate());
+        if (voteId != null) {
             votesService.update(voteId, restaurantId, dateTime);
             log.info("update vote {} with restaurant id={} and user id = {}", voteId, restaurantId, userId);
             return ResponseEntity.noContent().build();

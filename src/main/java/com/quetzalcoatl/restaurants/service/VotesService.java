@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.quetzalcoatl.restaurants.util.ValidationUtil.checkNotFoundWithId;
 
@@ -37,23 +36,21 @@ public class VotesService {
     @Transactional
     public Votes create(int restaurantId, int userId, LocalDateTime dateTime) {
         Votes vote = new Votes();
-        vote.setRestaurant(restaurantRepository.findById(restaurantId).get());
-        vote.setUser(userRepository.findById(userId).get());
+        vote.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId).orElse(null), restaurantId));
+        vote.setUser(checkNotFoundWithId(userRepository.findById(userId).orElse(null), userId));
         vote.setDateTime(dateTime);
         return repository.save(vote);
-
-
     }
 
     @Transactional
     public Votes update(int voteId, int newRestaurantId, LocalDateTime dateTime) {
-        Votes vote = repository.findById(voteId).orElseThrow();
-        if (isLate(dateTime.toLocalTime(), dateTime.toLocalDate(), vote.getDate())) {
+        Votes vote = checkNotFoundWithId(repository.findById(voteId).orElse(null), voteId);
+        if (isLate(dateTime, vote.getDate())) {
             throw new LateToVoteException("It is late to change your vote");
         }
         vote.setRestaurant(restaurantRepository.getOne(newRestaurantId));
         vote.setDateTime(dateTime);
-        return checkNotFoundWithId(repository.save(vote), vote.getId());
+        return repository.save(vote);
 
     }
 
@@ -61,23 +58,8 @@ public class VotesService {
         return repository.findAll();
     }
 
-    public boolean isVotesOnDate(int userId, LocalDate date) {
-        List<LocalDate> list = repository.getDateByUser(userId);
-        List<LocalDate> dateList = list.stream()
-                .distinct()
-                .filter(d -> d.isEqual(date))
-                .collect(Collectors.toList());
-        return !dateList.isEmpty();
-
-    }
-
-    public int getVoteIdByUserAndDate(int userId, LocalDate date){
-        List<Votes> votesByUser = repository.getByUserId(userId);
-        return votesByUser.stream()
-                .filter(v -> (v.getDate().isEqual(date)))
-                .collect(Collectors.toList())
-                .get(0)
-                .getId();
+    public Integer getVoteIdByUserIdAndDate(int userId, LocalDate date){
+        return repository.getVoteIdByUserIdAndDate(userId, date);
     }
 
     //vote history
@@ -89,8 +71,9 @@ public class VotesService {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
-    private boolean isLate(LocalTime time, LocalDate actualDate, LocalDate dateFromVote) {
-        return time.isAfter(REVOTE_TIME) || !actualDate.isEqual(dateFromVote);
+
+    private boolean isLate(LocalDateTime actualDateTime, LocalDate dateFromVote) {
+        return actualDateTime.toLocalTime().isAfter(REVOTE_TIME) || !actualDateTime.toLocalDate().isEqual(dateFromVote);
 
     }
 
