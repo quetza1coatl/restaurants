@@ -2,10 +2,10 @@ package com.quetzalcoatl.restaurants.web.controllers;
 
 import com.quetzalcoatl.restaurants.model.MenuItem;
 import com.quetzalcoatl.restaurants.model.Restaurant;
-import com.quetzalcoatl.restaurants.model.Votes;
+import com.quetzalcoatl.restaurants.model.Vote;
 import com.quetzalcoatl.restaurants.service.MenuItemService;
 import com.quetzalcoatl.restaurants.service.RestaurantService;
-import com.quetzalcoatl.restaurants.service.VotesService;
+import com.quetzalcoatl.restaurants.service.VoteService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,14 +27,14 @@ public class RestaurantsRestController {
 
     private final RestaurantService restaurantService;
     private final MenuItemService menuItemService;
-    private final VotesService votesService;
+    private final VoteService voteService;
     private static final Logger log = getLogger(RestaurantsRestController.class);
 
     @Autowired
-    public RestaurantsRestController(RestaurantService restaurantService, MenuItemService menuItemService, VotesService votesService) {
+    public RestaurantsRestController(RestaurantService restaurantService, MenuItemService menuItemService, VoteService voteService) {
         this.restaurantService = restaurantService;
         this.menuItemService = menuItemService;
-        this.votesService = votesService;
+        this.voteService = voteService;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -84,9 +84,9 @@ public class RestaurantsRestController {
 
     //(returns id, restaurant_id, user_id, dateTime)
     @GetMapping(value = "/{id}/vote-history", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Votes> getVoteHistoryByRestaurantId(@PathVariable("id") int id) {
+    public List<Vote> getVoteHistoryByRestaurantId(@PathVariable("id") int id) {
         log.info("get vote history with restaurant id={}", id);
-        return votesService.getAllByRestaurantId(id);
+        return voteService.getAllByRestaurantId(id);
     }
 
 

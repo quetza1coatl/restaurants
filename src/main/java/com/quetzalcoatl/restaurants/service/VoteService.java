@@ -1,9 +1,9 @@
 package com.quetzalcoatl.restaurants.service;
 
-import com.quetzalcoatl.restaurants.model.Votes;
+import com.quetzalcoatl.restaurants.model.Vote;
 import com.quetzalcoatl.restaurants.repository.CrudRestaurantRepository;
 import com.quetzalcoatl.restaurants.repository.CrudUserRepository;
-import com.quetzalcoatl.restaurants.repository.CrudVotesRepository;
+import com.quetzalcoatl.restaurants.repository.CrudVoteRepository;
 import com.quetzalcoatl.restaurants.util.exceptions.LateToVoteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,27 +15,27 @@ import java.util.List;
 
 import static com.quetzalcoatl.restaurants.util.ValidationUtil.checkNotFoundWithId;
 
-@Service("votesService")
-public class VotesService {
+@Service("voteService")
+public class VoteService {
 
-    private final CrudVotesRepository repository;
+    private final CrudVoteRepository repository;
     private final CrudUserRepository userRepository;
     private final CrudRestaurantRepository restaurantRepository;
 
     private final LocalTime REVOTE_TIME = LocalTime.of(11,0);
 
     @Autowired
-    public VotesService(CrudVotesRepository repository,
-                        CrudUserRepository userRepository,
-                        CrudRestaurantRepository restaurantRepository) {
+    public VoteService(CrudVoteRepository repository,
+                       CrudUserRepository userRepository,
+                       CrudRestaurantRepository restaurantRepository) {
         this.repository = repository;
         this.userRepository = userRepository;
         this.restaurantRepository = restaurantRepository;
     }
 
     @Transactional
-    public Votes create(int restaurantId, int userId, LocalDateTime dateTime) {
-        Votes vote = new Votes();
+    public Vote create(int restaurantId, int userId, LocalDateTime dateTime) {
+        Vote vote = new Vote();
         vote.setRestaurant(checkNotFoundWithId(restaurantRepository.findById(restaurantId).orElse(null), restaurantId));
         vote.setUser(checkNotFoundWithId(userRepository.findById(userId).orElse(null), userId));
         vote.setDateTime(dateTime);
@@ -43,8 +43,8 @@ public class VotesService {
     }
 
     @Transactional
-    public Votes update(int voteId, int newRestaurantId, LocalDateTime dateTime) {
-        Votes vote = checkNotFoundWithId(repository.findById(voteId).orElse(null), voteId);
+    public Vote update(int voteId, int newRestaurantId, LocalDateTime dateTime) {
+        Vote vote = checkNotFoundWithId(repository.findById(voteId).orElse(null), voteId);
         if (isLate(dateTime, vote.getDate())) {
             throw new LateToVoteException("It is late to change your vote");
         }
@@ -54,7 +54,7 @@ public class VotesService {
 
     }
 
-    public List<Votes> getAll() {
+    public List<Vote> getAll() {
         return repository.findAll();
     }
 
@@ -63,11 +63,11 @@ public class VotesService {
     }
 
     //vote history
-    public List<Votes> getAllByRestaurantId(int id) {
+    public List<Vote> getAllByRestaurantId(int id) {
         return repository.getByRestaurantId(id);
     }
 
-    public Votes get(Integer id) {
+    public Vote get(Integer id) {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 

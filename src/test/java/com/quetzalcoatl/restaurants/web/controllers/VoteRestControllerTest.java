@@ -2,9 +2,9 @@ package com.quetzalcoatl.restaurants.web.controllers;
 
 import com.quetzalcoatl.restaurants.model.MenuItem;
 import com.quetzalcoatl.restaurants.model.Restaurant;
-import com.quetzalcoatl.restaurants.model.Votes;
+import com.quetzalcoatl.restaurants.model.Vote;
 import com.quetzalcoatl.restaurants.service.MenuItemService;
-import com.quetzalcoatl.restaurants.service.VotesService;
+import com.quetzalcoatl.restaurants.service.VoteService;
 import com.quetzalcoatl.restaurants.web.AbstractRestControllerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class VoteRestControllerTest extends AbstractRestControllerTest {
     private final LocalTime REVOTE_TIME = LocalTime.of(11, 0);
     @Autowired
-    VotesService service;
+    VoteService service;
     @Autowired
     MenuItemService menuItemService;
 
@@ -57,7 +57,7 @@ class VoteRestControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isCreated())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-        Votes returned = readFromJsonResultActions(action, Votes.class);
+        Vote returned = readFromJsonResultActions(action, Vote.class);
         assertEquals(returned.getRestaurant().getId().intValue(), RESTAURANT_1_ID);
         assertEquals(returned.getUser().getId().intValue(), USER_ID);
         assertEquals(returned.getDateTime().toLocalDate(), LocalDate.now());
@@ -67,7 +67,7 @@ class VoteRestControllerTest extends AbstractRestControllerTest {
     void testRevote() throws Exception {
         ResultActions action = mockMvc.perform(post(REST_URL + "/" + RESTAURANT_1_ID)
                 .with(userHttpBasic(USER)));
-        Votes returned = readFromJsonResultActions(action, Votes.class);
+        Vote returned = readFromJsonResultActions(action, Vote.class);
         LocalTime now = LocalTime.now();
 
         ResultActions actionRevote = mockMvc.perform(post(REST_URL + "/" + RESTAURANT_2_ID)

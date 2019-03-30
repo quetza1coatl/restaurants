@@ -1,6 +1,6 @@
 package com.quetzalcoatl.restaurants.service;
 
-import com.quetzalcoatl.restaurants.model.Votes;
+import com.quetzalcoatl.restaurants.model.Vote;
 import com.quetzalcoatl.restaurants.util.exceptions.LateToVoteException;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
@@ -12,9 +12,9 @@ import java.time.LocalTime;
 import static com.quetzalcoatl.restaurants.TestValues.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class VotesServiceTest extends AbstractServiceTest{
+class VoteServiceTest extends AbstractServiceTest{
     @Autowired
-    VotesService service;
+    VoteService service;
 
     @Test
     void create() {
@@ -40,7 +40,7 @@ class VotesServiceTest extends AbstractServiceTest{
         LocalDate dateOfUpdate = service.get(VOTE_1_ID).getDateTime().toLocalDate();
         LocalDateTime dateTime = LocalDateTime.of(dateOfUpdate, LocalTime.of(10,30));
         service.update(VOTE_1_ID, RESTAURANT_2_ID, dateTime);
-        Votes updated = service.get(VOTE_1_ID);
+        Vote updated = service.get(VOTE_1_ID);
         assertEquals(RESTAURANT_2_ID, updated.getRestaurant().getId().intValue());
     }
 

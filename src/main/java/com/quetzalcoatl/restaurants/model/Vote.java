@@ -13,9 +13,9 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "votes")
-public class Votes extends AbstractBaseEntity{
+public class Vote extends AbstractBaseEntity{
 
-    public Votes() {
+    public Vote() {
     }
 
 
@@ -73,6 +73,7 @@ public class Votes extends AbstractBaseEntity{
     public LocalDateTime getDateTime(){
         return LocalDateTime.of(date,time);
     }
+
     public void setDateTime(LocalDateTime dateTime){
         date = dateTime.toLocalDate();
         time = dateTime.toLocalTime();
