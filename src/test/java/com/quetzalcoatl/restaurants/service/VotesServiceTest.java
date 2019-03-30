@@ -4,10 +4,6 @@ import com.quetzalcoatl.restaurants.model.Votes;
 import com.quetzalcoatl.restaurants.util.exceptions.LateToVoteException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -15,13 +11,7 @@ import java.time.LocalTime;
 import static com.quetzalcoatl.restaurants.TestValues.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitWebConfig(locations = {
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-class VotesServiceTest {
+class VotesServiceTest extends AbstractServiceTest{
     @Autowired
     VotesService service;
 

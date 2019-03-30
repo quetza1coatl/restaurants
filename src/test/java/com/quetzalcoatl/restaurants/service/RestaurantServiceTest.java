@@ -5,10 +5,6 @@ import com.quetzalcoatl.restaurants.model.Restaurant;
 import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
-
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -17,13 +13,7 @@ import static com.quetzalcoatl.restaurants.TestValues.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringJUnitWebConfig(locations = {
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-class RestaurantServiceTest {
+class RestaurantServiceTest extends AbstractServiceTest{
     @Autowired
     RestaurantService service;
 

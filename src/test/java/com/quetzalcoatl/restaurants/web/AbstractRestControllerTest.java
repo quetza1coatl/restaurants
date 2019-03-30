@@ -1,5 +1,7 @@
 package com.quetzalcoatl.restaurants.web;
 
+import com.quetzalcoatl.restaurants.TimingExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,6 +17,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
         "classpath:spring/spring-mvc.xml",
         "classpath:spring/spring-db.xml"
 })
+@ExtendWith(TimingExtension.class)
 @Transactional
 public abstract class AbstractRestControllerTest {
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
