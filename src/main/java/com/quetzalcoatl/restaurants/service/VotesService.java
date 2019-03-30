@@ -48,7 +48,7 @@ public class VotesService {
     @Transactional
     public Votes update(int voteId, int newRestaurantId, LocalDateTime dateTime) {
         Votes vote = repository.findById(voteId).orElseThrow();
-        if (isLate(dateTime.toLocalTime(), dateTime.toLocalDate(), vote.getDateTime().toLocalDate())) {
+        if (isLate(dateTime.toLocalTime(), dateTime.toLocalDate(), vote.getDate())) {
             throw new LateToVoteException("It is late to change your vote");
         }
         vote.setRestaurant(restaurantRepository.getOne(newRestaurantId));
@@ -62,9 +62,8 @@ public class VotesService {
     }
 
     public boolean isVotesOnDate(int userId, LocalDate date) {
-        List<LocalDateTime> list = repository.getDateTimeByUser(userId);
+        List<LocalDate> list = repository.getDateByUser(userId);
         List<LocalDate> dateList = list.stream()
-                .map(d -> d.toLocalDate())
                 .distinct()
                 .filter(d -> d.isEqual(date))
                 .collect(Collectors.toList());
@@ -75,7 +74,7 @@ public class VotesService {
     public int getVoteIdByUserAndDate(int userId, LocalDate date){
         List<Votes> votesByUser = repository.getByUserId(userId);
         return votesByUser.stream()
-                .filter(v -> (v.getDateTime().toLocalDate().isEqual(date)))
+                .filter(v -> (v.getDate().isEqual(date)))
                 .collect(Collectors.toList())
                 .get(0)
                 .getId();

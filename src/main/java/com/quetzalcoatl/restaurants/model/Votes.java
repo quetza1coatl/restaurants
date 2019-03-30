@@ -6,7 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 @Entity
@@ -26,10 +28,15 @@ public class Votes extends AbstractBaseEntity{
     private User user;
 
 
-    @Column(name = "date_time", nullable = false)
+    @Column(name = "date", nullable = false)
     @NotNull
     @DateTimeFormat
-    private LocalDateTime dateTime;
+    private LocalDate date;
+
+    @Column(name = "time", nullable = false)
+    @NotNull
+    @DateTimeFormat
+    private LocalTime time;
 
     public Restaurant getRestaurant() {
         return restaurant;
@@ -47,11 +54,27 @@ public class Votes extends AbstractBaseEntity{
         this.user = user;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public LocalDateTime getDateTime(){
+        return LocalDateTime.of(date,time);
+    }
+    public void setDateTime(LocalDateTime dateTime){
+        date = dateTime.toLocalDate();
+        time = dateTime.toLocalTime();
     }
 }

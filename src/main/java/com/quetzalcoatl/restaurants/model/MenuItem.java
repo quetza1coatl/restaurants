@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "menu_item")
+@Table(name = "menu_items")
 public class MenuItem extends AbstractBaseEntity{
 
     public MenuItem() {

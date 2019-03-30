@@ -50,7 +50,7 @@ public final class TestValues {
     public static final Restaurant RESTAURANT_2 = new Restaurant(RESTAURANT_2_ID, "Ресторан 2","Адрес 2");
     public static final Restaurant RESTAURANT_3 = new Restaurant(RESTAURANT_3_ID, "Ресторан 3", "Адрес 3");
     public static final List<Restaurant> RESTAURANTS_LIST = List.of(RESTAURANT_1,RESTAURANT_2,RESTAURANT_3);
-    public static final String VOTE_HISTORY_RESTAURANT_1_RESPONSE = "[[33,12,10,\"2019-01-05T09:00:00\"]]";
+    public static final String VOTE_HISTORY_RESTAURANT_1_RESPONSE = "[[33,12,10,\"2019-01-05\",\"09:00:00\"]]";
 
 
     public static final MenuItem MENU_ITEM_1 = new MenuItem(MENU_ITEM_1_ID, 168, of(2018,12,30));
