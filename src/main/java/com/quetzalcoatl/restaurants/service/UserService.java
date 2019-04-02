@@ -3,7 +3,6 @@ package com.quetzalcoatl.restaurants.service;
 import com.quetzalcoatl.restaurants.AuthorizedUser;
 import com.quetzalcoatl.restaurants.model.User;
 import com.quetzalcoatl.restaurants.repository.CrudUserRepository;
-import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,15 +42,15 @@ public class UserService implements UserDetailsService {
         checkNotFoundWithId(repository.save(prepareToSave(user, passwordEncoder)), user.getId());
     }
 
-    public void delete(int id) throws NotFoundException {
+    public void delete(int id) {
         checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
-    public User get(int id) throws NotFoundException {
+    public User get(int id) {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
     }
 
-    public User getByEmail(String email) throws NotFoundException {
+    public User getByEmail(String email) {
         Assert.notNull(email, "email must not be null");
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }

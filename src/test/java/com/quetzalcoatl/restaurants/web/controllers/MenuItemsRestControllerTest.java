@@ -102,7 +102,8 @@ class MenuItemsRestControllerTest extends AbstractRestControllerTest {
         ResultActions action = mockMvc.perform(post(REST_DISHES_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(created))
-                .with(userHttpBasic(ADMIN)));
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print());
 
         Dish returned = readFromJsonResultActions(action, Dish.class);
         created.setId(returned.getId());

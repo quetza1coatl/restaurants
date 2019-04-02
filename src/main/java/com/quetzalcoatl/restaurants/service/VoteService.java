@@ -22,7 +22,7 @@ public class VoteService {
     private final CrudUserRepository userRepository;
     private final CrudRestaurantRepository restaurantRepository;
 
-    private final LocalTime REVOTE_TIME = LocalTime.of(11,0);
+    private static final LocalTime REVOTE_TIME = LocalTime.of(11,0);
 
     @Autowired
     public VoteService(CrudVoteRepository repository,

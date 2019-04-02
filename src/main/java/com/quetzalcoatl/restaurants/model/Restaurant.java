@@ -12,23 +12,6 @@ import java.util.List;
 @Table(name = "restaurants")
 public class Restaurant extends AbstractBaseEntity {
 
-    public Restaurant() {
-
-    }
-
-    public Restaurant(String name, String address) {
-      this.name = name;
-      this.address = address;
-
-    }
-    public Restaurant(Integer id, String name, String address) {
-        super(id);
-        this.name = name;
-        this.address = address;
-
-
-    }
-
     @Column(name = "name", nullable = false)
     @NotBlank
     @Size(min = 2, max = 100)
@@ -47,7 +30,18 @@ public class Restaurant extends AbstractBaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant", cascade = CascadeType.ALL)
     private List<MenuItem> menuItems;
 
+    public Restaurant() {
+    }
 
+    public Restaurant(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+    public Restaurant(Integer id, String name, String address) {
+        super(id);
+        this.name = name;
+        this.address = address;
+    }
 
     public String getName() {
         return name;

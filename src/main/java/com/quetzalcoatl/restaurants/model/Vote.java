@@ -15,18 +15,13 @@ import java.time.LocalTime;
 @Table(name = "votes")
 public class Vote extends AbstractBaseEntity{
 
-    public Vote() {
-    }
-
-
     @OneToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
     @OneToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
-
 
     @Column(name = "date", nullable = false)
     @NotNull
@@ -37,6 +32,9 @@ public class Vote extends AbstractBaseEntity{
     @NotNull
     @DateTimeFormat
     private LocalTime time;
+
+    public Vote() {
+    }
 
     public Restaurant getRestaurant() {
         return restaurant;

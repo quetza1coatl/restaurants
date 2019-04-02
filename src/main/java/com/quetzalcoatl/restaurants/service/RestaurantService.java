@@ -2,7 +2,6 @@ package com.quetzalcoatl.restaurants.service;
 
 import com.quetzalcoatl.restaurants.model.Restaurant;
 import com.quetzalcoatl.restaurants.repository.CrudRestaurantRepository;
-import com.quetzalcoatl.restaurants.util.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -35,11 +34,11 @@ public class RestaurantService {
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
-    public void delete(int id) throws NotFoundException {
+    public void delete(int id) {
         checkNotFoundWithId(repository.delete(id) != 0, id);
     }
 
-    public Restaurant get(int id) throws NotFoundException {
+    public Restaurant get(int id) {
         return checkNotFoundWithId(repository.findById(id).orElse(null), id);
 
     }

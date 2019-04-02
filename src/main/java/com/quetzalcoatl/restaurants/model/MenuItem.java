@@ -15,6 +15,24 @@ import java.time.LocalDate;
 @Table(name = "menu_items")
 public class MenuItem extends AbstractBaseEntity{
 
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Restaurant restaurant;
+
+    @OneToOne
+    private Dish dish;
+
+    @Column(name = "price")
+    @Range(min = 1)
+    @NotNull
+    private Integer price;
+
+    @Column(name = "date")
+    @DateTimeFormat(pattern = "MM-dd-yyyy")
+    private LocalDate date;
+
     public MenuItem() {
 
     }
@@ -29,25 +47,6 @@ public class MenuItem extends AbstractBaseEntity{
         this.price = price;
         this.date = date;
     }
-
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Restaurant restaurant;
-
-
-    @OneToOne
-    private Dish dish;
-
-    @Column(name = "price")
-    @Range(min = 1)
-    @NotNull
-    private Integer price;
-
-    @Column(name = "date")
-    @DateTimeFormat(pattern = "MM-dd-yyyy")
-    private LocalDate date;
 
 
     public Restaurant getRestaurant() {

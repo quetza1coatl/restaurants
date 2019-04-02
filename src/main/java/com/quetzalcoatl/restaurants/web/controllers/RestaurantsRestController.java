@@ -49,12 +49,6 @@ public class RestaurantsRestController {
         return restaurantService.get(id);
     }
 
-//    @GetMapping(value = "/on_date", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<Restaurant> getOnMenuDate(@RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-//        log.info("get restaurants with menu on {}", date);
-//        return restaurantService.getAllWithMenuOnDate(date);
-//    }
-
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteRestaurant(@PathVariable("id") int id) {
@@ -69,13 +63,10 @@ public class RestaurantsRestController {
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         log.info("create {}", created);
-
         return ResponseEntity.created(uriOfNewResource).body(created);
-
     }
 
     //history
-
     @GetMapping(value = "/{id}/menu-history", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MenuItem> getMenuHistoryByRestaurantId(@PathVariable("id") int id) {
         log.info("get menu history with restaurant id={}", id);

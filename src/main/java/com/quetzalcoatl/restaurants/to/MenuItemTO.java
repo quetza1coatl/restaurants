@@ -10,24 +10,6 @@ import java.time.LocalDate;
 public class MenuItemTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public MenuItemTO() {
-    }
-
-    public MenuItemTO(Integer id, Integer restaurantId, Integer dishId, Integer price, LocalDate date) {
-        this.id = id;
-        this.restaurantId = restaurantId;
-        this.dishId = dishId;
-        this.price = price;
-        this.date = date;
-    }
-
-    public MenuItemTO(Integer restaurantId, Integer dishId, Integer price, LocalDate date) {
-        this.restaurantId = restaurantId;
-        this.dishId = dishId;
-        this.price = price;
-        this.date = date;
-    }
-
     private Integer id;
 
     private Integer restaurantId;
@@ -40,6 +22,17 @@ public class MenuItemTO implements Serializable {
 
     @DateTimeFormat
     private LocalDate date;
+
+    public MenuItemTO() {
+    }
+
+    public MenuItemTO(Integer id, Integer restaurantId, Integer dishId, Integer price, LocalDate date) {
+        this.id = id;
+        this.restaurantId = restaurantId;
+        this.dishId = dishId;
+        this.price = price;
+        this.date = date;
+    }
 
     public Integer getId() {
         return id;

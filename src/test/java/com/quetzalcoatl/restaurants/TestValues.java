@@ -9,12 +9,9 @@ import static java.time.LocalDate.of;
 
 public final class TestValues {
 
-    private TestValues(){}
-
     public static final int RESTAURANT_1_ID = START_SEQ + 2;
     public static final int RESTAURANT_2_ID = START_SEQ + 3;
     public static final int RESTAURANT_3_ID = START_SEQ + 4;
-
 
     public static final int MENU_ITEM_1_ID = START_SEQ + 14;
     private static final int MENU_ITEM_2_ID = START_SEQ + 15;
@@ -26,10 +23,8 @@ public final class TestValues {
     private static final int MENU_ITEM_8_ID = START_SEQ + 21;
     private static final int MENU_ITEM_9_ID = START_SEQ + 22;
 
-
     public static final int USER_ID = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 1;
-
 
     public static final int DISH_1_ID = START_SEQ + 5;
     public static final int DISH_2_ID = START_SEQ + 6;
@@ -41,17 +36,13 @@ public final class TestValues {
     private static final int DISH_8_ID = START_SEQ + 12;
     private static final int DISH_9_ID = START_SEQ + 13;
 
-
     public static final int VOTE_1_ID = START_SEQ + 23;
-
-
 
     public static final Restaurant RESTAURANT_1 = new Restaurant(RESTAURANT_1_ID, "Ресторан 1", "Адрес 1");
     public static final Restaurant RESTAURANT_2 = new Restaurant(RESTAURANT_2_ID, "Ресторан 2","Адрес 2");
     public static final Restaurant RESTAURANT_3 = new Restaurant(RESTAURANT_3_ID, "Ресторан 3", "Адрес 3");
     public static final List<Restaurant> RESTAURANTS_LIST = List.of(RESTAURANT_1,RESTAURANT_2,RESTAURANT_3);
     public static final String VOTE_HISTORY_RESTAURANT_1_RESPONSE = "[[33,12,10,\"2019-01-05\",\"09:00:00\"]]";
-
 
     public static final MenuItem MENU_ITEM_1 = new MenuItem(MENU_ITEM_1_ID, 168, of(2018,12,30));
     public static final MenuItem MENU_ITEM_2 = new MenuItem(MENU_ITEM_2_ID, 257, of(2018,12,30));
@@ -76,18 +67,14 @@ public final class TestValues {
     private static final Dish DISH_9 = new Dish(DISH_9_ID, "Блюдо 9");
     public static final List<Dish> DISH_LIST = List.of(DISH_1,DISH_2,DISH_3,DISH_4,DISH_5,DISH_6,DISH_7,DISH_8,DISH_9);
 
-
     public static final User USER = new User(USER_ID, "User", "user@gmail.com", "user1", Role.ROLE_USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN);
-
 
     public static final String[] MENU_ITEMS_FIELDS_TO_IGNORE = {"restaurant", "dish"};
     public static final String[] DISHES_FIELDS_TO_IGNORE = new String[0];
     public static final String[] USERS_FIELDS_TO_IGNORE = {"registered", "password"};
     public static final String[] RESTAURANTS_FIELDS_TO_IGNORE = { "menuItems", "registered"};
 
-
-
-
+    private TestValues(){}
 
 }

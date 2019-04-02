@@ -4,6 +4,6 @@
     <title>Restaurants</title>
   </head>
   <body>
-  RESTful API
+   <a href="https://github.com/quetza1coatl/restaurants#rest-api-voting-system">RESTful API</a>
   </body>
 </html>

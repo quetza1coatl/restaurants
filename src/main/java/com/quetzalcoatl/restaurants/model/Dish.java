@@ -9,6 +9,11 @@ import javax.validation.constraints.Size;
 @Table(name = "dishes")
 public class Dish extends AbstractBaseEntity{
 
+    @Column(name = "name", nullable = false)
+    @NotBlank
+    @Size(min = 2, max = 100)
+    private String name;
+
     public Dish() {
     }
 
@@ -20,11 +25,6 @@ public class Dish extends AbstractBaseEntity{
         super(id);
         this.name = name;
     }
-
-    @Column(name = "name", nullable = false)
-    @NotBlank
-    @Size(min = 2, max = 100)
-    private String name;
 
     public String getName() {
         return name;

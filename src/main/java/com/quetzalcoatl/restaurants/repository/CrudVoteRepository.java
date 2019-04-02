@@ -20,6 +20,7 @@ public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
     @Override
     List<Vote> findAll();
 
+    //vote history
     @Query("SELECT v.id, v.restaurant.id, v.user.id, v.date, v.time FROM Vote v WHERE v.restaurant.id=:restaurantId ORDER BY v.date DESC, v.time DESC")
     List<Vote> getByRestaurantId(@Param("restaurantId") int restaurantId);
 
