@@ -1,9 +1,10 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/6b2dd31d807c4f1798c420f45908b43c)](https://www.codacy.com/app/quetza1coatl/restaurants?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=quetza1coatl/restaurants&amp;utm_campaign=Badge_Grade)  
 ## REST API VOTING SYSTEM
 Система голосования, позволяющая пользователям каждый день выбирать ресторан, в котором они хотели бы пообедать, в зависимости от меню.  
 Выбор осуществляется из списка ресторанов, в котором есть меню на текущий день.  
 Два вида пользователей: администратор (роль ROLE_ADMIN) и обычный пользователь (роль ROLE_USER).  
 Обычный пользователь может проголосовать в течение дня (и менять свой голос до 11:00).  
-Администратор добавляет рестораны, обновляет их меню каждый день (добавляет элементы меню текущего дня, 2-5 записи с указанием текущей даты), при необходимости расширяет справочник еды.  
+Администратор добавляет рестораны, обновляет их меню каждый день (добавляет элементы меню для ресторана: 2-5 записи с указанием текущей даты), при необходимости расширяет справочник еды.  
 Доступные ресурсы для администратора:  
 localhost:8080/rest/admin/*  
 localhost:8080/rest/restaurants/*  
@@ -13,6 +14,8 @@ localhost:8080/rest/dishes
 localhost:8080/rest/vote/restaurants/*  
 Доступный ресурс для неавторизованных пользователей:  
 localhost:8080/rest/profile/register  
+API описывает усеченный CRUD функционал в соответствии с требованиями ТЗ, но может быть легко расширен при необходимости. 
+ 
   
 ## CURL
 Для авторизации после curl-команды вводятся креденшелы в формате `--user {mail}:{password}`, например:  
@@ -42,7 +45,7 @@ localhost:8080/rest/profile/register
  ### localhost:8080/rest/menu-items/* и localhost:8080/rest/dishes
  Ресурсы предназначены для работы с меню.
  Элементы меню содержат ID ресторана, наименование (берется из справочника блюд (Dish)) и цену блюда, дату создания записи.
- Цена на блюдо представлена Integer, если необходимо выделение рублей/копеек - это осуществляется на фронте.
+ Цена на блюдо представлена Integer, если необходимо выделение рублей/копеек - осуществляется на фронте.
   #### create new menu item  
  `curl -s -X POST -d '{"restaurantId":"12","dishId":"20","price":"129","date":"2019-03-16"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/menu-items`  
  #### get all menu items
@@ -50,7 +53,7 @@ localhost:8080/rest/profile/register
  #### delete menu item with ID=30
  `curl -s -X DELETE http://localhost:8080/rest/menu-items/30`   
   
-  Работа со справочником блюд
+  ***Работа со справочником блюд***
   #### create new dish
  `curl -s -X POST -d '{"name":"newDish"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/dishes`  
  #### get all dishes
